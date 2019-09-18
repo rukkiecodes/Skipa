@@ -1,13 +1,13 @@
 <template>
-  <About />
+  <Profile />
 </template>
 
 <script>
-import About from "../components/About";
+import Profile from "../components/Profile";
 
 export default {
   components: {
-    About
+    Profile
   }
 };
 </script>

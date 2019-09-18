@@ -5,6 +5,7 @@
               <Nav />
           </v-flex>
       </v-layout>
+      <router-view/>
   </v-container>
 </template>
 

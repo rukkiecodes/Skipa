@@ -2,8 +2,6 @@
   <v-layout>
     <v-toolbar dark src="@/assets/bg4.jpg">
       <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <!-- <v-toolbar-title>Skipa</v-toolbar-title> -->
       <v-avatar width="8em" height="auto">
         <img src="@/assets/logo.png" alt="avatar" />
       </v-avatar>
@@ -15,13 +13,13 @@
       </v-btn>
     </v-toolbar>
 
-    <v-navigation-drawer src="@/assets/bg4.jpg" v-model="drawer" app class="grey lighten-5">
+    <v-navigation-drawer app absolute temporary src="@/assets/bg4.jpg" v-model="drawer" app class="grey lighten-5">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
             <div class="text-center">
               <v-avatar>
-                  <img src="@/assets/icon.png" alt="avatar" />
+                <img src="@/assets/icon.png" alt="avatar" />
               </v-avatar>
               <!-- <h1 class="white--text">Skipa</h1> -->
             </div>
@@ -32,7 +30,7 @@
       <v-divider></v-divider>
 
       <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" router :to="item.route" link>
           <v-list-item-icon>
             <v-icon class="white--text">{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -52,11 +50,12 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard" },
-        { title: "Photos", icon: "mdi-image" },
-        { title: "Videos", icon: "mdi-video" },
-        { title: "About", icon: "mdi-help-box" },
-        { title: "Logout", icon: "mdi-logout" }
+        { title: "Library", icon: "mdi-view-dashboard", route: "/dashboard" },
+        { title: "Profile", icon: "mdi-account", route: "/dashboard/profile" },
+        { title: "Photos", icon: "mdi-image", route: "/dashboard/photos" },
+        { title: "Videos", icon: "mdi-video", route: "/dashboard/videos" },
+        { title: "About", icon: "mdi-help-box", route: "/dashboard/about" },
+        { title: "Logout", icon: "mdi-logout", route: "/dashboard/logout" }
       ],
       right: null
     };
