@@ -12,9 +12,6 @@
         <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
       </v-avatar>
       <p class="primary--text mx-2 my-auto">John Doe</p>
-      <v-btn icon class="primary--text">
-        <v-icon>mdi-export</v-icon>
-      </v-btn>
     </v-toolbar>
 
     <v-navigation-drawer
@@ -61,7 +58,7 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Library", icon: "mdi-view-dashboard", route: "/dashboard" },
+        { title: "Library", icon: "mdi-view-dashboard", route: "/dashboard/library" },
         { title: "Profile", icon: "mdi-account", route: "/dashboard/profile" },
         { title: "Photos", icon: "mdi-image", route: "/dashboard/photos" },
         { title: "Videos", icon: "mdi-video", route: "/dashboard/videos" },

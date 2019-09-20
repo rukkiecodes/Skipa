@@ -26,6 +26,11 @@ export default new Router({
       component: Dashboard,
       children: [
         {
+          path: "library",
+          name: "library",
+          component: Library
+        },
+        {
           path: "profile",
           name: "profile",
           component: Profile
@@ -39,11 +44,6 @@ export default new Router({
           path: "videos",
           name: "videos",
           component: Videos
-        },
-        {
-          path: "library",
-          name: "library",
-          component: Library
         },
         {
           path: "about",
