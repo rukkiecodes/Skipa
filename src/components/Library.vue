@@ -1,5 +1,5 @@
 <template>
-  <div class="library">
+  <div class="library grey lighten-5">
     <v-layout row wrap>
       <v-flex class="advert">
         <v-img class="white--text image" height="100%" src="@/assets/bg4.jpg">
@@ -23,63 +23,23 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap>
+    <v-layout row wrap class="my-5">
       <v-flex class="my-5" xs12 sm6 md3 lg3 xl3>
-        <v-hover v-slot:default="{ hover }">
-          <v-card max-width="250" class="mx-auto" :elevation="hover ? 12 : 2">
-            <v-row class="py-4 pl-4">
-              <v-col class="shrink">
-                <v-img height="200" width="200" src="@/assets/add-file.png">
-                  <p>Add a File</p>
-                </v-img>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-hover>
+        <AddFile />
       </v-flex>
 
       <v-flex class="my-5" xs12 sm6 md3 lg3 xl3>
-        <v-hover v-slot:default="{ hover }">
-          <v-card max-width="250" class="mx-auto" :elevation="hover ? 12 : 2">
-            <v-row class="py-4 pl-4">
-              <v-col class="shrink">
-                <v-img height="200" width="200" src="@/assets/add-folder.png">
-                  <p>Add a Folder</p>
-                </v-img>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-hover>
+        <AddFloder />
       </v-flex>
 
       <v-flex class="my-5" xs12 sm6 md3 lg3 xl3>
-        <v-hover v-slot:default="{ hover }">
-          <v-card max-width="250" class="mx-auto" :elevation="hover ? 12 : 2">
-            <v-row class="py-4 pl-4">
-              <v-col class="shrink">
-                <v-img height="200" width="200" src="@/assets/photo.png">
-                  <p>Upload a Photo</p>
-                </v-img>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-hover>
+        <AddPhoto />
       </v-flex>
+
       <v-flex class="my-5" xs12 sm6 md3 lg3 xl3>
-        <v-hover v-slot:default="{ hover }">
-          <v-card max-width="250" class="mx-auto" :elevation="hover ? 12 : 2">
-            <v-row class="py-4 pl-4">
-              <v-col class="shrink">
-                <v-img height="200" width="200" src="@/assets/video.png">
-                  <p>Upload a Video</p>
-                </v-img>
-              </v-col>
-            </v-row>
-          </v-card>
-        </v-hover>
+        <AddVideo />
       </v-flex>
     </v-layout>
-
     <v-layout>
       <v-flex>
         <Footer />
@@ -90,9 +50,17 @@
 
 <script>
 import Footer from "./Footer";
+import AddFile from "./AddFile";
+import AddFloder from "./AddFolder";
+import AddPhoto from "./AddPhoto";
+import AddVideo from "./AddVideo";
 export default {
   components: {
-    Footer
+    Footer,
+    AddFile,
+    AddFloder,
+    AddPhoto,
+    AddVideo
   }
 };
 </script>
@@ -101,7 +69,7 @@ export default {
 .library {
   margin: 0;
   padding: 0;
-  height: 110vh;
+  height: 100%;
 
   .advert {
     .image {
