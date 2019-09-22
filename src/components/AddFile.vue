@@ -1,7 +1,7 @@
 <template>
   <div class="addfile">
     <v-row justify="center">
-      <v-dialog dark v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+      <v-dialog v-model="dialog" persistent max-width="300">
         <template v-slot:activator="{ on }">
           <v-flex>
             <v-hover v-slot:default="{ hover }">
@@ -17,35 +17,25 @@
             </v-hover>
           </v-flex>
         </template>
-
         <v-card>
-          <v-toolbar dark color="primary">
-            <v-btn icon dark @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Upload A File</v-toolbar-title>
-            <div class="flex-grow-1"></div>
-          </v-toolbar>
-
-          <v-layout class="displayimage my-8" wrap row>
-            <v-flex class="myflex" xs12 sm12 md6 lg6 xl6>
-              <v-hover v-slot:default="{ hover }">
-                <v-card :elevation="hover ? 12 : 2" class="mx-auto" height="250" max-width="250">
-                  <div
-                    class="image-input"
-                    style="display: block;
+          <v-card-title class="headline">Upload a File</v-card-title>
+          <v-hover v-slot:default="{ hover }">
+            <v-card :elevation="hover ? 12 : 2" class="mx-auto" height="250" max-width="250">
+              <div
+                class="image-input"
+                style="display: block;
                     width: 100%;
                     height: 100%;
                     cursor: pointer;
                     background-size: cover;
                     background-position: center center;"
-                    :style="{ 'background-image': `url(${imageData})` }"
-                    @click="chooseImage"
-                  >
-                    <span
-                      v-if="!imageData"
-                      class="placeholder"
-                      style="background: #f0f0f0;
+                :style="{ 'background-image': `url(${imageData})` }"
+                @click="chooseImage"
+              >
+                <span
+                  v-if="!imageData"
+                  class="placeholder"
+                  style="background: #f0f0f0;
                       width: 100%;
                       height: 100%;
                       display: flex;
@@ -54,37 +44,28 @@
                       color: #333;
                       font-size: 18px;
                       font-family: Helvetica;"
-                    >Choose an Image</span>
-                    <input
-                      class="file-input"
-                      ref="fileInput"
-                      type="file"
-                      style="display: none;"
-                      @input="onSelectFile"
-                    />
-                  </div>
-                  <v-card-actions>
-                    <v-btn
-                      color="red"
-                      class="white--text"
-                      @click="clearPreview"
-                    >
-                      Cancel
-                      <v-icon right dark>mdi-cancel</v-icon>
-                    </v-btn>
-
-                    <v-btn
-                      color="primary"
-                      class="white--text"
-                    >
-                      Upload
-                      <v-icon right dark>mdi-cloud-upload</v-icon>
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-hover>
-            </v-flex>
-          </v-layout>
+                >Choose an Image</span>
+                <input
+                  class="file-input"
+                  ref="fileInput"
+                  type="file"
+                  style="display: none;"
+                  @input="onSelectFile"
+                />
+              </div>
+            </v-card>
+          </v-hover>
+          <v-card-actions style="display: flex; justify-content: space-around;">
+            <v-btn @click="closeModal" class="ma-2" outlined large fab color="warning">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-btn @click="clearPreview" class="ma-2" outlined large fab color="red">
+              <v-icon>mdi-cancel</v-icon>
+            </v-btn>
+            <v-btn class="ma-2" outlined large fab color="success">
+              <v-icon>mdi-cloud-upload</v-icon>
+            </v-btn>
+          </v-card-actions>
         </v-card>
       </v-dialog>
     </v-row>
@@ -128,8 +109,13 @@ export default {
       }
     },
 
-    clearPreview(){
-      this.imageData = null
+    clearPreview() {
+      this.imageData = null;
+    },
+
+    closeModal(){
+      this.dialog = false;
+      this.imageData = null;
     }
   }
 };
