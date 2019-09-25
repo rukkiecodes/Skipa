@@ -51,6 +51,7 @@
                   type="file"
                   style="display: none;"
                   @input="onSelectFile"
+                  multiple
                 />
               </div>
             </v-card>

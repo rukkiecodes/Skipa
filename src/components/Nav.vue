@@ -1,10 +1,12 @@
 <template>
-  <v-layout>
-    <v-toolbar dark color="#fff">
+  <nav>
+    <v-toolbar dark flat class="grey lighten-5">
       <v-app-bar-nav-icon class="primary--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-avatar width="8em" height="auto">
-        <img src="@/assets/logo.png" alt="avatar" />
-      </v-avatar>
+      <v-toolbar-title>
+        <v-avatar width="8em" height="auto">
+          <img src="@/assets/logo.png" alt="avatar" />
+        </v-avatar>
+      </v-toolbar-title>
 
       <div class="flex-grow-1"></div>
 
@@ -49,7 +51,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-  </v-layout>
+  </nav>
 </template>
 
 <script>
@@ -58,7 +60,11 @@ export default {
     return {
       drawer: false,
       items: [
-        { title: "Library", icon: "mdi-view-dashboard", route: "/dashboard/library" },
+        {
+          title: "Library",
+          icon: "mdi-view-dashboard",
+          route: "/dashboard/library"
+        },
         { title: "Profile", icon: "mdi-account", route: "/dashboard/profile" },
         { title: "Photos", icon: "mdi-image", route: "/dashboard/photos" },
         { title: "Videos", icon: "mdi-video", route: "/dashboard/videos" },

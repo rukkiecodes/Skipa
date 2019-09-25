@@ -31,7 +31,7 @@
 
     <v-dialog v-model="dialog2" persistent max-width="400px">
       <template v-slot:activator="{ on }">
-        <v-btn style="margin-left:2%;" color="primary text-capitalize subtitle-1" dark v-on="on">Sign Up<i class="text-right fas fa-sign-in-alt"></i></v-btn>
+        <v-btn style="margin-left:2%;" color="primary text-capitalize subtitle-1" dark v-on="on">Sign Up<i class="text-right fas fa-user"></i></v-btn>
       </template>
       <v-card>
         <v-card-title>
