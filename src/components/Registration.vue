@@ -32,7 +32,7 @@
         <v-card-actions>
           <div class="flex-grow-1"></div>
           <v-btn color="blue darken-1" text @click="dialog1 = false">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog1 = false">Login</v-btn>
+          <v-btn color="blue darken-1" text @click="login">Login</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -127,6 +127,22 @@ export default {
           }
           console.log(error);
         });
+    },
+    login(){
+      fb.auth().signInWithEmailAndPassword(this.email, this.password)
+      .then(user => {
+        this.$router.replace('dashboard/library');
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if(errorCode === 'auth/wrong-password'){
+          alert("Wrong Password");
+        }else{
+          alert(errorMessage);
+        }
+        console.log(error);
+      })
     }
   }
 };
