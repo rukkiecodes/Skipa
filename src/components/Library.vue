@@ -69,7 +69,6 @@ export default {
 .library {
   margin: 0;
   padding: 0;
-  height: 100%;
 
   .advert {
     .image {

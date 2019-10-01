@@ -16,7 +16,7 @@
           </v-hover>
         </v-flex>
       </template>
-
+      
       <v-card>
         <v-toolbar flat class="grey lighten-5">
           <v-btn class="primary--text" icon dark @click="dialog = false">
