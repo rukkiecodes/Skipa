@@ -3,7 +3,7 @@
     <v-toolbar dark flat class="grey lighten-5">
       <v-app-bar-nav-icon class="primary--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <v-avatar width="8em" height="auto">
+        <v-avatar width="5em" height="auto">
           <img src="@/assets/logo.png" alt="avatar" />
         </v-avatar>
       </v-toolbar-title>
