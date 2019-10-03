@@ -1,4 +1,4 @@
-# studio
+# skippa
 
 ## Project setup
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "studio",
+  "name": "skippa",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,12 +9,9 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "firebase": "^7.0.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
-    "vue-upload-component": "^2.8.20",
-    "vue-upload-multiple-image": "^1.1.4",
     "vuetify": "^2.0.0",
     "vuex": "^3.0.1"
   },
