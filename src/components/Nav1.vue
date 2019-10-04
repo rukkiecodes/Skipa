@@ -11,9 +11,16 @@
 
       <div class="flex-grow-1"></div>
 
-      <v-btn text>
-        <router-link class="black--text" style="text-decoration:none;" to="/about">About</router-link>
-      </v-btn>
+      <v-btn-toggle tile color="deep-purple accent-3" group>
+        <v-btn value="right">
+          <router-link class="black--text" style="text-decoration:none;" to="/about">About</router-link>
+        </v-btn>
+
+        <v-btn class="black--text" value="justify">
+          <!-- <Register/> -->
+          <Nested/>
+        </v-btn>
+      </v-btn-toggle>
     </v-toolbar>
 
     <v-navigation-drawer app absolute temporary color="#fff" v-model="drawer" class="white">
@@ -29,11 +36,7 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <v-text-field
-                        clearable
-                        label="Search Skippa"
-                        type="text"
-                      >
+                      <v-text-field clearable label="Search Skippa" type="text">
                         <template v-slot:append>
                           <v-fade-transition leave-absolute>
                             <v-btn icon class="my-n2">
@@ -56,12 +59,21 @@
       <v-list dense nav>
         <v-list-item v-for="item in items" :key="item.title" router :to="item.route" link>
           <v-list-item-icon>
-            <v-icon class="primary--text">{{ item.icon }}</v-icon>
+            <v-icon class="black--text">{{ item.icon }}</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title class="primary--text">{{ item.title }}</v-list-item-title>
+            <v-list-item-title class="black--text">{{ item.title }}</v-list-item-title>
           </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item>
+          <v-expansion-panels v-model="panel" multiple>
+            <v-expansion-panel>
+              <v-expansion-panel-header>More</v-expansion-panel-header>
+              <v-expansion-panel-content>Some content</v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -69,23 +81,22 @@
 </template>
 
 <script>
+// import Register from "./Registration";
+import Nested from "./Nested"
 export default {
-  data() {
-    return {
-      drawer: true,
-      items: [
-        {
-          title: "Library",
-          icon: "mdi-view-dashboard"
-        },
-        { title: "Profile", icon: "mdi-account" },
-        { title: "Photos", icon: "mdi-image" },
-        { title: "Videos", icon: "mdi-video" },
-        { title: "About", icon: "mdi-help-box" },
-        { title: "Logout", icon: "mdi-logout" }
-      ],
-      right: null
-    };
+  data: () => ({
+    drawer: false,
+    items: [
+      { title: "Photos", icon: "mdi-image" },
+      { title: "Videos", icon: "mdi-video" },
+      { title: "About", icon: "mdi-help-box" }
+    ],
+    right: null,
+    panel: [0, 1]
+  }),
+  components: {
+    // Register
+    Nested
   }
 };
 </script>

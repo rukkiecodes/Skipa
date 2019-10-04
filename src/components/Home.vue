@@ -31,8 +31,7 @@
 import Nav1 from "./Nav1";
 export default {
   data: () => ({
-    selection: [],
-    items: ["Foo", "Bar", "Fizz", "Buzz"]
+    
   }),
   components: {
     Nav1
