@@ -14,7 +14,7 @@
               <v-col class="pa-10">
                 <v-list-item color="rgba(0, 0, 0, .4)" dark>
                   <v-list-item-content>
-                    <v-list-item-title class="display-3">Skipa</v-list-item-title>
+                    <v-list-item-title class="display-3">Skippa</v-list-item-title>
                     <v-list-item-subtitle class="body-1">Powered by creators everywhere</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>

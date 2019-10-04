@@ -17,7 +17,6 @@
         </v-btn>
 
         <v-btn class="black--text" value="justify">
-          <!-- <Register/> -->
           <Nested/>
         </v-btn>
       </v-btn-toggle>
@@ -40,7 +39,7 @@
                         <template v-slot:append>
                           <v-fade-transition leave-absolute>
                             <v-btn icon class="my-n2">
-                              <v-icon>mdi-send</v-icon>
+                              <v-icon class="black--text">mdi-send</v-icon>
                             </v-btn>
                           </v-fade-transition>
                         </template>
@@ -92,7 +91,7 @@ export default {
       { title: "About", icon: "mdi-help-box" }
     ],
     right: null,
-    panel: [0, 1]
+    panel: false
   }),
   components: {
     // Register

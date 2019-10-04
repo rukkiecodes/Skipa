@@ -1,5 +1,14 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <v-container>
+    <About/>
+  </v-container>
 </template>
+
+<script>
+import About from "@/components/About"
+export default {
+  components:{
+    About
+  }
+}
+</script>

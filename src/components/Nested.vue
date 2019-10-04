@@ -87,7 +87,7 @@
 <script>
 export default {
   data: () => ({
-    dialog: true,
+    dialog: false,
     dialog2: false,
     isMobile: false,
     companyName: null,
