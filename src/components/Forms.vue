@@ -38,7 +38,7 @@
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
                   <v-btn color="black" text @click="closeDialog1">Cancel</v-btn>
-                  <v-btn color="black" text>Sign Up</v-btn>
+                  <v-btn color="black" text @click="signup">Sign Up</v-btn>
                 </v-card-actions>
               </v-row>
             </v-container>
@@ -46,7 +46,12 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog max-width="50%" :fullscreen="$vuetify.breakpoint.xsOnly" v-model="dialog2" persistent>
+      <v-dialog
+        max-width="50%"
+        :fullscreen="$vuetify.breakpoint.xsOnly"
+        v-model="dialog2"
+        persistent
+      >
         <v-card>
           <v-card-title>
             <span class="headline">Login</span>
@@ -73,7 +78,7 @@
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
                   <v-btn color="black" text @click="closeDialog2">Cancel</v-btn>
-                  <v-btn color="black" text>Login</v-btn>
+                  <v-btn color="black" text @click="login">Login</v-btn>
                 </v-card-actions>
               </v-row>
             </v-container>
@@ -85,6 +90,7 @@
 </template>
 
 <script>
+import { fb } from "../firebaseConfig";
 export default {
   data: () => ({
     dialog: false,
@@ -110,27 +116,61 @@ export default {
     });
   },
   methods: {
+    login(){
+      fb.auth().signInWithEmailAndPassword(
+        this.signinEmail, this.signinPassword
+      ).then(user => {
+        this.$router.replace("/dashboard")
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if(errorCode == 'auth/wrong-password'){
+          alert("wrong Password");
+        }else{
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
+    },
+    signup() {
+      fb.auth()
+        .createUserWithEmailAndPassword(this.signupEmail, this.signupPassword)
+        .then(() => {
+          this.$router.replace("/dashboard");
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode === "auth/week-password") {
+            alert("Sorry Your password is week");
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+        });
+    },
     onResize() {
       this.isMobile = window.innerWidth < 600;
     },
-    closeDialog1(){
-        this.dialog = false;
-        this.companyName = null;
-        this.signupEmail = null;
-        this.signupPassword = null;
+    closeDialog1() {
+      this.dialog = false;
+      this.companyName = null;
+      this.signupEmail = null;
+      this.signupPassword = null;
     },
-    closeDialog2(){
-        this.dialog2 = false;
-        this.signinEmail = null;
-        this.signinPassword = null;
+    closeDialog2() {
+      this.dialog2 = false;
+      this.signinEmail = null;
+      this.signinPassword = null;
     },
-    openDialog2(){
-        this.dialog = false;
-        this.dialog2 = true;
+    openDialog2() {
+      this.dialog = false;
+      this.dialog2 = true;
     },
-    openDialog1(){
-        this.dialog2 = false;
-        this.dialog = true;
+    openDialog1() {
+      this.dialog2 = false;
+      this.dialog = true;
     }
   }
 };

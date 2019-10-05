@@ -1,10 +1,10 @@
 <template>
   <nav>
     <v-toolbar dense flat color="white">
-      <v-app-bar-nav-icon class="grey--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="black--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="display:flex;">
         <router-link to="/">
-          <v-img width="2em" src="@/assets/logo.png"></v-img>
+          <v-img class="image" width="2em" src="@/assets/logo.png"></v-img>
         </router-link>
         <p class="my-2 mx-2">Skippa</p>
       </v-toolbar-title>
@@ -17,7 +17,7 @@
         </v-btn>
 
         <v-btn class="black--text" value="justify">
-          <Nested/>
+          <Forms />
         </v-btn>
       </v-btn-toggle>
     </v-toolbar>
@@ -28,7 +28,7 @@
           <v-list-item-title class="title">
             <div class="text-center">
               <v-avatar>
-                <img src="@/assets/logo.png" alt="avatar" />
+                <img class="image" src="@/assets/logo.png" alt="avatar" />
               </v-avatar>
 
               <v-form>
@@ -65,14 +65,7 @@
             <v-list-item-title class="black--text">{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-
         <v-list-item>
-          <v-expansion-panels v-model="panel" multiple>
-            <v-expansion-panel>
-              <v-expansion-panel-header>More</v-expansion-panel-header>
-              <v-expansion-panel-content>Some content</v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -80,22 +73,31 @@
 </template>
 
 <script>
-// import Register from "./Registration";
-import Nested from "./Nested"
+import Forms from "./Forms";
 export default {
   data: () => ({
     drawer: false,
     items: [
       { title: "Photos", icon: "mdi-image" },
       { title: "Videos", icon: "mdi-video" },
-      { title: "About", icon: "mdi-help-box" }
+      { title: "About", icon: "mdi-help", route: "/about" }
     ],
     right: null,
     panel: false
   }),
   components: {
-    // Register
-    Nested
+    Forms
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.image {
+  animation: spin 4s linear infinite;
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>

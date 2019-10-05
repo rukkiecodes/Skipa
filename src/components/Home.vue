@@ -13,7 +13,7 @@
             <v-row align="end" class="fill-height">
               <v-col class="pa-10">
                 <v-list-item color="rgba(0, 0, 0, .4)" dark>
-                  <v-list-item-content>
+                  <v-list-item-content class="bounce">
                     <v-list-item-title class="display-3">Skippa</v-list-item-title>
                     <v-list-item-subtitle class="body-1">Powered by creators everywhere</v-list-item-subtitle>
                   </v-list-item-content>
@@ -30,9 +30,7 @@
 <script>
 import Nav1 from "./Nav1";
 export default {
-  data: () => ({
-    
-  }),
+  data: () => ({}),
   components: {
     Nav1
   }
@@ -43,5 +41,17 @@ export default {
 .home {
   margin: 0;
   padding: 0;
+
+  .bounce {
+    animation: bounce 1s infinite alternate;
+  }
+  @keyframes bounce {
+    from {
+      transform: translateY(0px);
+    }
+    to {
+      transform: translateY(-15px);
+    }
+  }
 }
 </style>
