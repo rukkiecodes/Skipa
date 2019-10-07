@@ -1,14 +1,14 @@
 <template>
-  <v-container>
-    <About/>
-  </v-container>
+  <div>
+    <About />
+  </div>
 </template>
 
 <script>
-import About from "@/components/About"
+import About from "@/components/About";
 export default {
-  components:{
+  components: {
     About
   }
-}
+};
 </script>

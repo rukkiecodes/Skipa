@@ -1,7 +1,7 @@
 <template>
   <div class="form">
     <v-row justify="center">
-      <v-btn text color="black" dark @click="dialog = true">Sign Up</v-btn>
+      <v-btn text color="grey darken-3" dark @click="dialog = true">Sign Up</v-btn>
       <v-dialog
         class="dialog1"
         max-width="50%"
@@ -64,7 +64,26 @@
                 </v-col>
                 <v-col cols="12">
                   <v-text-field v-model="signinPassword" label="Password*" type="password" required></v-text-field>
-                  <br />
+                  <v-row>
+                    <p>Login Options</p>
+                  </v-row>
+                  <v-row class="d-flex">
+                    <v-col cols="4">
+                      <v-btn text icon color="red">
+                        <v-icon>mdi-google</v-icon>
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-btn text icon color="#4267B2">
+                        <v-icon>mdi-facebook</v-icon>
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="4">
+                      <v-btn text icon color="#1DA1F2">
+                        <v-icon>mdi-twitter</v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
                   <div>
                     <p @click="openDialog1" style="cursor: pointer;">
                       Don't have an account?
@@ -116,22 +135,22 @@ export default {
     });
   },
   methods: {
-    login(){
-      fb.auth().signInWithEmailAndPassword(
-        this.signinEmail, this.signinPassword
-      ).then(user => {
-        this.$router.replace("/dashboard")
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if(errorCode == 'auth/wrong-password'){
-          alert("wrong Password");
-        }else{
-          alert(errorMessage);
-        }
-        console.log(error);
-      });
+    login() {
+      fb.auth()
+        .signInWithEmailAndPassword(this.signinEmail, this.signinPassword)
+        .then(user => {
+          this.$router.replace("/dashboard");
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode == "auth/wrong-password") {
+            alert("wrong Password");
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+        });
     },
     signup() {
       fb.auth()
