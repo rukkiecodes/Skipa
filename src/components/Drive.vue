@@ -57,7 +57,6 @@
                         <v-row>
                           <v-col cols="12">
                             <v-file-input
-                              v-model="randomFile"
                               multiple
                               label="File input"
                               accept="image/*|audio/*|video/*"
@@ -65,7 +64,7 @@
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
-                              v-model="randomName"
+                              v-model="files.randomName"
                               label="Name / Company Name*"
                               required
                             >
@@ -74,7 +73,7 @@
                           </v-col>
                           <v-col cols="12">
                             <v-textarea
-                              v-model="randomPreview"
+                              v-model="files.randomPreview"
                               name="input-7-1"
                               label="Preview"
                               placeholder="Write a short preview"
@@ -89,7 +88,7 @@
                       <v-btn class="red--text" text @click="clearRandom">
                         <v-icon>mdi-cancel</v-icon>Cancel
                       </v-btn>
-                      <v-btn class="green--text" text>
+                      <v-btn class="green--text" text @click="uploadFile">
                         <v-icon>mdi-cloud-upload</v-icon>Save
                       </v-btn>
                     </v-card-actions>
@@ -200,6 +199,7 @@
 </template>
 
 <script>
+import { fb, db } from "../firebaseConfig";
 export default {
   data: () => ({
     labels: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm", "9pm"],
@@ -208,11 +208,26 @@ export default {
     dialog1: false,
     dialog2: false,
     dialog3: false,
-    randomFile: null,
-    randomName: null,
-    randomPreview: null
+    files: {
+    //   randomFile: null,
+      randomName: null,
+      randomPreview: null
+    }
   }),
   methods: {
+    uploadFile() {
+      db.collection("Media").add(this.files)
+      .then(docRef => {
+          console.log("Document written with ID ", docRef.id);
+          this.reset();
+      })
+      .catch(error => {
+          console.error("Error adding document: ", error);
+      });
+    },
+    reset(){
+        Object.assign(this.$data, this.$options.data.apply(this));
+    },
     clearRandom() {
       this.randomFile = null;
       this.randomName = null;
