@@ -2,7 +2,7 @@
   <div class="dashboard">
     <v-layout>
       <v-flex>
-        <Nav2 />
+        <Nav />
       </v-flex>
     </v-layout>
     <router-view />
@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import Nav2 from "./Nav2";
+import Nav from "./Nav";
 export default {
   components: {
-    Nav2
+    Nav
   }
 };
 </script>

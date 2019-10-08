@@ -56,11 +56,14 @@
                       <v-container>
                         <v-row>
                           <v-col cols="12">
-                            <v-file-input
+                            <!-- <v-file-input
+                              @change="uploadRandome()"
                               multiple
                               label="File input"
+                              type="file"
                               accept="image/*|audio/*|video/*"
-                            ></v-file-input>
+                            ></v-file-input> -->
+                            <input type="file" @change="uploadRandom">
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
@@ -94,100 +97,6 @@
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
-
-                <!-- dialog for only image upload -->
-                <v-dialog v-model="dialog2" persistent max-width="600px">
-                  <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" tile color="white" class="black--text" text>
-                      <v-icon color="grey darken-4">mdi-image</v-icon>
-                      <p class="my-2 black--text">Image</p>
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline">Upload an Image</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12">
-                            <v-file-input multiple label="File input" accept="image/*"></v-file-input>
-                          </v-col>
-                          <v-col cols="12">
-                            <!-- <v-text-field label="Name*" required></v-text-field> -->
-                            <v-text-field label="Name / Company Name*" required>
-                              <v-icon slot="prepend">mdi-account</v-icon>
-                            </v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-textarea
-                              name="input-7-1"
-                              label="Preview"
-                              placeholder="Write a short preview"
-                              hint="How would u like people to think about you work"
-                            ></v-textarea>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn class="red--text" text @click="dialog2 = false">
-                        <v-icon>mdi-cancel</v-icon>Cancel
-                      </v-btn>
-                      <v-btn class="green--text" text>
-                        <v-icon>mdi-cloud-upload</v-icon>Save
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-
-                <!-- dialod for only video upload -->
-                <v-dialog v-model="dialog3" persistent max-width="600px">
-                  <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" tile color="white" class="black--text" text>
-                      <v-icon color="grey darken-4">mdi-video</v-icon>
-                      <p class="my-2 black--text">Video</p>
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline">Upload Video</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12">
-                            <v-file-input multiple label="File input" accept="video/*"></v-file-input>
-                          </v-col>
-                          <v-col cols="12">
-                            <!-- <v-text-field label="Name*" required></v-text-field> -->
-                            <v-text-field label="Name / Company Name*" required>
-                              <v-icon slot="prepend">mdi-account</v-icon>
-                            </v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-textarea
-                              name="input-7-1"
-                              label="Preview"
-                              placeholder="Write a short preview"
-                              hint="How would u like people to think about you work"
-                            ></v-textarea>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn class="red--text" text @click="dialog3 = false">
-                        <v-icon>mdi-cancel</v-icon>Cancel
-                      </v-btn>
-                      <v-btn class="green--text" text>
-                        <v-icon>mdi-cloud-upload</v-icon>Save
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
               </v-row>
             </v-app-bar>
             <v-divider></v-divider>
@@ -196,41 +105,9 @@
       </v-row>
     </v-layout>
 
-    <!-- <v-layout row wrap>
-      <v-row>
-        <v-col>
-          <v-flex v-for="card in cards" :key="card" class="my-5" xs12 sm6 md4 lg4 xl4>
-            <v-card class="v-card" raised>
-              <v-card-title class="pa-2 card-title">
-                <v-layout>
-                  <v-flex xs3 sm3 md3 lg3 xl3>
-                    <v-avatar class="card-avatar">
-                      <v-img width="1.2em" height="auto"></v-img>
-                    </v-avatar>
-                  </v-flex>
-
-                  <v-flex xs7 sm7 md7 lg7 xl7>
-                    <div class="title-texts mt-n1">
-                      <p>{{ card.randomName }}</p>
-                      <h6 class="mt-n8">{{card.randomPreview }}</h6>
-                    </div>
-                  </v-flex>
-
-                  <v-flex xs3 sm3 md3 lg3 xl3>
-                    <v-btn text icon color="grey darken-3">
-                      <v-icon></v-icon>
-                    </v-btn>
-                  </v-flex>
-                </v-layout>
-              </v-card-title>
-            </v-card>
-          </v-flex>
-        </v-col>
-      </v-row>
-    </v-layout>-->
     <v-layout class="imgk">
       <v-layout row wrap class="imgs my-10">
-        <v-flex v-for="card in cards" :key="card" class="my-5" xs12 sm6 md4 lg4 xl4>
+        <v-flex v-for="(card, id) in cards" :key="id" class="my-5" xs12 sm6 md4 lg4 xl4>
           <v-card class="v-card" raised>
             <v-card-title class="pa-2 card-title">
               <v-layout>
@@ -256,7 +133,7 @@
             </v-card-title>
             <v-img height="auto"></v-img>
 
-            <v-card-action>
+            <v-card-actions>
               <v-row justify="space-around">
                 <v-btn text icon color="red">
                   <v-icon></v-icon>
@@ -265,7 +142,7 @@
                   <v-icon></v-icon>
                 </v-btn>
               </v-row>
-            </v-card-action>
+            </v-card-actions>
           </v-card>
         </v-flex>
       </v-layout>
@@ -275,14 +152,13 @@
 
 <script>
 import { fb, db } from "../firebaseConfig";
+import { storage } from "../firebaseConfig";
 export default {
   data: () => ({
     labels: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm", "9pm"],
     value: [200, 675, 410, 390, 310, 460, 250, 240],
     collapseOnScroll: true,
     dialog1: false,
-    dialog2: false,
-    dialog3: false,
     cards: [],
     files: {
       //   randomFile: null,
@@ -291,15 +167,23 @@ export default {
     }
   }),
   methods: {
+    uploadRandom(e) {
+        let file = e.target.files[0];
+        var storageRef = fb.storage().ref('images/'+ file.name);
+        storageRef.put(file);
+        console.log(e.target.files[0]);
+    },
     readData() {
       db.collection("Media")
         .get()
         .then(querySnapshot => {
-          //   this.cards = querySnapshot;
           querySnapshot.forEach(doc => {
-            console.log(doc.id, "=>", doc.data());
+            // console.log(doc.id, " => ", doc.data());
             this.cards.push(doc.data());
           });
+        })
+        .catch(error => {
+          console.log("Error getting documents: ", error);
         });
     },
     uploadFile() {
@@ -345,18 +229,28 @@ export default {
 .toolbar-title {
   color: rgba(0, 0, 0, 0.8);
 }
-.v-card {
+.imgk {
   width: 90%;
+  margin: auto;
 
-  .card-title {
-    .title-texts {
-      // margin-top: 5%;
-      p {
-        font-size: 0.6em;
-      }
-      h6 {
-        font-size: 0.5em;
-        font-weight: 400;
+  .imgs {
+    justify-content: space-around;
+    display: flex;
+
+    .v-card {
+      width: 90%;
+
+      .card-title {
+        .title-texts {
+          // margin-top: 5%;
+          p {
+            font-size: 0.6em;
+          }
+          h6 {
+            font-size: 0.5em;
+            font-weight: 400;
+          }
+        }
       }
     }
   }
