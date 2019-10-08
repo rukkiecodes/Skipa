@@ -195,6 +195,81 @@
         </v-col>
       </v-row>
     </v-layout>
+
+    <!-- <v-layout row wrap>
+      <v-row>
+        <v-col>
+          <v-flex v-for="card in cards" :key="card" class="my-5" xs12 sm6 md4 lg4 xl4>
+            <v-card class="v-card" raised>
+              <v-card-title class="pa-2 card-title">
+                <v-layout>
+                  <v-flex xs3 sm3 md3 lg3 xl3>
+                    <v-avatar class="card-avatar">
+                      <v-img width="1.2em" height="auto"></v-img>
+                    </v-avatar>
+                  </v-flex>
+
+                  <v-flex xs7 sm7 md7 lg7 xl7>
+                    <div class="title-texts mt-n1">
+                      <p>{{ card.randomName }}</p>
+                      <h6 class="mt-n8">{{card.randomPreview }}</h6>
+                    </div>
+                  </v-flex>
+
+                  <v-flex xs3 sm3 md3 lg3 xl3>
+                    <v-btn text icon color="grey darken-3">
+                      <v-icon></v-icon>
+                    </v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-card-title>
+            </v-card>
+          </v-flex>
+        </v-col>
+      </v-row>
+    </v-layout>-->
+    <v-layout class="imgk">
+      <v-layout row wrap class="imgs my-10">
+        <v-flex v-for="card in cards" :key="card" class="my-5" xs12 sm6 md4 lg4 xl4>
+          <v-card class="v-card" raised>
+            <v-card-title class="pa-2 card-title">
+              <v-layout>
+                <v-flex xs3 sm3 md3 lg3 xl3>
+                  <v-avatar class="card-avatar">
+                    <v-img width="1.2em" height="auto"></v-img>
+                  </v-avatar>
+                </v-flex>
+
+                <v-flex xs7 sm7 md7 lg7 xl7>
+                  <div class="title-texts mt-n1">
+                    <p>{{ card.randomName }}</p>
+                    <h6 class="mt-n8">{{ card.randomPreview }}</h6>
+                  </div>
+                </v-flex>
+
+                <v-flex xs3 sm3 md3 lg3 xl3>
+                  <v-btn text icon color="grey darken-3">
+                    <v-icon></v-icon>
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </v-card-title>
+            <v-img height="auto"></v-img>
+
+            <v-card-action>
+              <v-row justify="space-around">
+                <v-btn text icon color="red">
+                  <v-icon></v-icon>
+                </v-btn>
+                <v-btn text icon color="grey darken-3">
+                  <v-icon></v-icon>
+                </v-btn>
+              </v-row>
+            </v-card-action>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-layout>
   </v-container>
 </template>
 
@@ -208,25 +283,38 @@ export default {
     dialog1: false,
     dialog2: false,
     dialog3: false,
+    cards: [],
     files: {
-    //   randomFile: null,
+      //   randomFile: null,
       randomName: null,
       randomPreview: null
     }
   }),
   methods: {
-    uploadFile() {
-      db.collection("Media").add(this.files)
-      .then(docRef => {
-          console.log("Document written with ID ", docRef.id);
-          this.reset();
-      })
-      .catch(error => {
-          console.error("Error adding document: ", error);
-      });
+    readData() {
+      db.collection("Media")
+        .get()
+        .then(querySnapshot => {
+          //   this.cards = querySnapshot;
+          querySnapshot.forEach(doc => {
+            console.log(doc.id, "=>", doc.data());
+            this.cards.push(doc.data());
+          });
+        });
     },
-    reset(){
-        Object.assign(this.$data, this.$options.data.apply(this));
+    uploadFile() {
+      db.collection("Media")
+        .add(this.files)
+        .then(docRef => {
+          console.log("Document written with ID ", docRef.id);
+          this.readData();
+        })
+        .catch(error => {
+          console.error("Error adding document: ", error);
+        });
+    },
+    reset() {
+      Object.assign(this.$data, this.$options.data.apply(this));
     },
     clearRandom() {
       this.randomFile = null;
@@ -234,6 +322,9 @@ export default {
       this.randomPreview = null;
       this.dialog1 = false;
     }
+  },
+  created() {
+    this.readData();
   }
 };
 </script>
@@ -253,5 +344,21 @@ export default {
 }
 .toolbar-title {
   color: rgba(0, 0, 0, 0.8);
+}
+.v-card {
+  width: 90%;
+
+  .card-title {
+    .title-texts {
+      // margin-top: 5%;
+      p {
+        font-size: 0.6em;
+      }
+      h6 {
+        font-size: 0.5em;
+        font-weight: 400;
+      }
+    }
+  }
 }
 </style>
