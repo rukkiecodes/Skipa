@@ -27,7 +27,7 @@
 
     <v-layout class="imgk">
       <v-layout row wrap class="imgs my-10">
-        <v-flex v-for="card in cards" :key="card" class="my-5" xs12 sm6 md4 lg4 xl4>
+        <v-flex v-for="(card, id) in cards" :key="id" class="my-5" xs12 sm6 md4 lg4 xl4>
           <v-card class="v-card" raised>
             <v-card-title class="pa-2 card-title">
               <v-layout>
@@ -53,7 +53,7 @@
             </v-card-title>
             <v-img :src="card.img" height="auto"></v-img>
 
-            <v-card-action>
+            <v-card-actions>
               <v-row justify="space-around">
                 <v-btn text icon color="red">
                   <v-icon>{{ card.buttons.heart }}</v-icon>
@@ -62,7 +62,7 @@
                   <v-icon>{{ card.buttons.eye }}</v-icon>
                 </v-btn>
               </v-row>
-            </v-card-action>
+            </v-card-actions>
           </v-card>
         </v-flex>
       </v-layout>

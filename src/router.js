@@ -40,8 +40,8 @@ export default new Router({
           component: Video
         },
         {
-          path: "about",
-          name: "about",
+          path: "aboutSkippa",
+          name: "aboutSkippa",
           component: AboutSkippa
         }
       ]

@@ -133,7 +133,7 @@ export default {
       {
         title: "About",
         icon: "mdi-help",
-        route: "/dashboard/about"
+        route: "/dashboard/aboutSkippa"
       }
     ],
     menu: false
