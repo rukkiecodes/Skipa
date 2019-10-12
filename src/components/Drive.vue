@@ -24,15 +24,14 @@
                       <v-container>
                         <v-row>
                           <v-col cols="12">
-                            <input type="file" @change="uploadRandom" multiple />
+                            <input type="file" @change="uploadFiles" multiple />
                           </v-col>
                           <v-col cols="12">
                             <v-text-field
                               v-model="files.fileName"
                               label="Name / Company Name*"
                               required
-                            >
-                            </v-text-field>
+                            ></v-text-field>
                           </v-col>
                           <v-col cols="12">
                             <v-textarea
@@ -84,9 +83,19 @@
                   </div>
                 </v-flex>
 
-                <v-flex xs3 sm3 md3 lg3 xl3>
+                <v-flex xs1 sm1 md1 lg1 xl1>
                   <v-btn text icon color="grey darken-3">
                     <v-icon>{{ files.buttons.download }}</v-icon>
+                  </v-btn>
+                </v-flex>
+                <v-flex xs1 sm1 md1 lg1 xl1>
+                  <v-btn text icon color="primary">
+                    <v-icon>{{ files.buttons.pen }}</v-icon>
+                  </v-btn>
+                </v-flex>
+                <v-flex xs1 sm1 md1 lg1 xl1>
+                  <v-btn text icon color="primary">
+                    <v-icon>{{ files.buttons.bin }}</v-icon>
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -101,7 +110,7 @@
                 <v-btn text icon color="red">
                   <v-icon>{{ files.buttons.heart }}</v-icon>
                 </v-btn>
-                <v-btn text icon color="grey darken-3">
+                <v-btn @click="deleteFile(location.id)" text icon color="grey darken-3">
                   <v-icon>{{ files.buttons.eye }}</v-icon>
                 </v-btn>
               </v-row>
@@ -125,15 +134,17 @@ export default {
       fileImages: [],
       fileName: null,
       filePreview: null,
-      buttons:{
+      buttons: {
         heart: "mdi-heart",
-          eye: "mdi-eye",
-          download: "mdi-download"
+        eye: "mdi-eye",
+        download: "mdi-download",
+        pen: "mdi-pencil",
+        bin: "mdi-trash-can"
       }
     }
   }),
   methods: {
-    uploadRandom(e) {
+    uploadFiles(e) {
       let file = e.target.files[0];
 
       var storageRef = fb.storage().ref("images/" + file.name);
@@ -171,12 +182,14 @@ export default {
           console.log("Error getting documents: ", error);
         });
     },
+    readStorage() {},
     uploadFile() {
       db.collection("Media")
         .add(this.files)
         .then(docRef => {
           console.log("Document written with ID ", docRef.id);
           this.readData();
+          this.dialog1 = false;
         })
         .catch(error => {
           console.error("Error adding document: ", error);
@@ -186,9 +199,9 @@ export default {
       Object.assign(this.$data, this.$options.data.apply(this));
     },
     clearRandom() {
-      this.randomFile = null;
-      this.randomName = null;
-      this.randomPreview = null;
+      this.files.fileImages = [];
+      this.files.fileName = null;
+      this.filePreview = null;
       this.dialog1 = false;
     }
   },
