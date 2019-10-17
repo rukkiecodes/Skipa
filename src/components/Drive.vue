@@ -52,9 +52,9 @@
                       <p class="my-2 black--text">File</p>
                     </v-btn>
                   </template>
-                  <v-card flat>
+                  <v-card class="dialog-card">
                     <v-card-title>
-                      <span class="headline">Upload file</span>
+                      <span class="headline grey--text text--darken-3">Upload Files</span>
                     </v-card-title>
                     <v-card-text>
                       <v-container>
@@ -79,17 +79,22 @@
                             ></v-textarea>
                           </v-col>
                         </v-row>
+
+                        <v-row justify="center">
+                          <v-card-actions>
+                            <div class="flex-grow-1"></div>
+                            <v-btn dark color="red" class="white--text" text @click="clearRandom">
+                              <v-icon left>mdi-cancel</v-icon>
+                              <span>Cancel</span>
+                            </v-btn>
+                            <v-btn dark color="primary" class="white--text" text @click="uploadFile">
+                              <v-icon left>mdi-cloud-upload</v-icon>
+                              <span>Sign Up</span>
+                            </v-btn>
+                          </v-card-actions>
+                        </v-row>
                       </v-container>
                     </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn class="red--text" text @click="clearRandom">
-                        <v-icon>mdi-cancel</v-icon>Cancel
-                      </v-btn>
-                      <v-btn class="green--text" text @click="uploadFile">
-                        <v-icon>mdi-cloud-upload</v-icon>Save
-                      </v-btn>
-                    </v-card-actions>
                   </v-card>
                 </v-dialog>
               </v-row>
@@ -257,7 +262,7 @@ export default {
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;
-    },
+    }
   },
   created() {
     this.readData();
