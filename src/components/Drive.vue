@@ -1,5 +1,36 @@
 <template>
   <v-container>
+    <v-layout>
+      <v-row justify="center">
+        <v-hover v-slot:default="{ hover }">
+          <v-card :elevation="hover ? 12 : 2" class="statistics-card mt-4 mx-auto">
+            <v-sheet
+              class="v-sheet--offset mx-auto"
+              color="indigo"
+              elevation="12"
+              max-width="calc(100% - 32px)"
+            >
+              <v-sparkline
+                :labels="labels"
+                :value="value"
+                color="white"
+                line-width="2"
+                padding="16"
+              ></v-sparkline>
+            </v-sheet>
+
+            <v-card-text class="pt-0">
+              <div class="title font-weight-light mb-2">Storage Readings</div>
+              <div class="subheading font-weight-light grey--text">Last Upload Performance</div>
+              <v-divider class="my-2"></v-divider>
+              <v-icon class="mr-2" small>mdi-clock</v-icon>
+              <span class="caption grey--text font-weight-light">last upload 26 minutes ago</span>
+            </v-card-text>
+          </v-card>
+        </v-hover>
+      </v-row>
+    </v-layout>
+
     <v-layout row wrap>
       <v-row justify="center">
         <v-col align-self="center">
@@ -9,7 +40,12 @@
             </v-card-title>
             <v-app-bar dense color="white" dark>
               <v-row justify="space-around">
-                <v-dialog v-model="dialog1" persistent max-width="600px">
+                <v-dialog
+                  :fullscreen="$vuetify.breakpoint.xsOnly"
+                  v-model="dialog1"
+                  persistent
+                  max-width="30%"
+                >
                   <template v-slot:activator="{ on }">
                     <v-btn dark v-on="on" tile color="white" text>
                       <v-icon color="grey darken-4">mdi-file</v-icon>
@@ -38,8 +74,8 @@
                               v-model="files.filePreview"
                               name="input-7-1"
                               label="Preview"
-                              placeholder="Write a short preview"
-                              hint="How would u like people to think about you work"
+                              placeholder="Write a short review"
+                              hint="What would you like people to think about you work"
                             ></v-textarea>
                           </v-col>
                         </v-row>
@@ -127,6 +163,8 @@ import { fb, db } from "../firebaseConfig";
 import { storage } from "../firebaseConfig";
 export default {
   data: () => ({
+    labels: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm", "9pm"],
+    value: [200, 675, 410, 390, 310, 460, 250, 240],
     collapseOnScroll: true,
     dialog1: false,
     cards: [],
@@ -143,6 +181,19 @@ export default {
       }
     }
   }),
+  beforeDestroy() {
+    if (typeof window !== "undefined") {
+      window.removeEventListener("resize", this.onResize, {
+        passive: true
+      });
+    }
+  },
+  mounted() {
+    this.onResize();
+    window.addEventListener("resize", this.onResize, {
+      passive: true
+    });
+  },
   methods: {
     uploadFiles(e) {
       let file = e.target.files[0];
@@ -203,7 +254,10 @@ export default {
       this.files.fileName = null;
       this.filePreview = null;
       this.dialog1 = false;
-    }
+    },
+    onResize() {
+      this.isMobile = window.innerWidth < 600;
+    },
   },
   created() {
     this.readData();

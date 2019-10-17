@@ -1,19 +1,19 @@
 <template>
   <nav>
-    <v-toolbar dense flat color="white">
-      <v-app-bar-nav-icon color="grey darken-3" @click="drawer = !drawer"></v-app-bar-nav-icon>
+    <v-toolbar app dense flat color="white">
+      <v-app-bar-nav-icon color="grey--text text--darken-3" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="display:flex;">
         <router-link to="/">
           <v-img width="2em" src="@/assets/logo.png"></v-img>
         </router-link>
-        <p class="my-2 mx-2">Skippa</p>
+        <p class="my-2 mx-2 grey--text text--darken-3 hidden-sm-and-down">Skippa</p>
       </v-toolbar-title>
 
       <div class="flex-grow-1"></div>
 
       <v-btn-toggle tile color="deep-purple accent-3" group>
         <v-btn value="right">
-          <router-link class="rout-color" style="text-decoration:none;" to="/about">About</router-link>
+          <router-link class="grey--text text--darken-3" style="text-decoration:none;" to="/about">About</router-link>
         </v-btn>
 
         <v-btn class="rout-color" value="justify">
@@ -22,15 +22,11 @@
       </v-btn-toggle>
     </v-toolbar>
 
-    <v-navigation-drawer app absolute temporary color="#fff" v-model="drawer" class="white">
+    <v-navigation-drawer v-model="drawer" app class="white">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="title">
             <div class="text-center">
-              <v-avatar>
-                <img class="image" src="@/assets/logo.png" alt="avatar" />
-              </v-avatar>
-
               <v-form>
                 <v-container>
                   <v-row>
@@ -39,7 +35,7 @@
                         <template v-slot:append>
                           <v-fade-transition leave-absolute>
                             <v-btn icon class="my-n2">
-                              <v-icon class="black--text">mdi-send</v-icon>
+                              <v-icon class="grey--text text--darken-3">mdi-send</v-icon>
                             </v-btn>
                           </v-fade-transition>
                         </template>
@@ -78,8 +74,6 @@ export default {
     drawer: false,
     items: [
       { title: "Home", icon: "mdi-home", route: "/" },
-      { title: "Photos", icon: "mdi-image" },
-      { title: "Videos", icon: "mdi-video" },
       { title: "About", icon: "mdi-help", route: "/about" }
     ],
     right: null,
@@ -90,19 +84,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.rout-color,
-.icon-color,
-.item-title {
-  color: rgba(0, 0, 0, 0.8);
-}
-.image {
-  animation: spin 4s linear infinite;
-}
-@keyframes spin {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-</style>

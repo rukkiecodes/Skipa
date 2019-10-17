@@ -6,7 +6,7 @@
       </v-flex>
     </v-layout>
     <AboutContent/>
-    <Footer />
+    <Footer class="footer" />
   </v-container>
 </template>
 
@@ -26,7 +26,13 @@ export default {
 <style lang="scss" scoped>
 .about {
   background: #fff;
-
   
+  .footer{
+    width: 75%;
+    margin: auto;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
 }
 </style>

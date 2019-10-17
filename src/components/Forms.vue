@@ -1,25 +1,21 @@
 <template>
   <div class="form">
     <v-row justify="center">
-      <v-btn text color="grey darken-3" dark @click="dialog = true">Sign Up</v-btn>
+      <v-btn text class="grey--text text--darken-3" dark @click="dialog = true">Sign Up</v-btn>
       <v-dialog
         class="dialog1"
-        max-width="50%"
+        max-width="30%"
         :fullscreen="$vuetify.breakpoint.xsOnly"
         v-model="dialog"
         persistent
-        scrollable
       >
         <v-card>
           <v-card-title>
-            <span class="headline">Sign Up</span>
+            <span class="headline grey--text text--darken-3">Sign Up</span>
           </v-card-title>
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col cols="12">
-                  <v-text-field v-model="companyName" label="Compary Name*"></v-text-field>
-                </v-col>
                 <v-col cols="12">
                   <v-text-field v-model="signupEmail" label="Email*"></v-text-field>
                 </v-col>
@@ -27,7 +23,7 @@
                   <v-text-field v-model="signupPassword" label="Password*" type="password" required></v-text-field>
                   <br />
                   <div>
-                    <p @click="openDialog2" style="cursor: pointer;">
+                    <p @click="openDialog2" class="grey--text text--darken-3" style="cursor: pointer;">
                       Already have an account?
                       <b>Sign In Here!</b>
                     </p>
@@ -37,8 +33,14 @@
               <v-row justify="center">
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
-                  <v-btn color="black" text @click="closeDialog1">Cancel</v-btn>
-                  <v-btn color="black" text @click="signup">Sign Up</v-btn>
+                  <v-btn dark color="red" class="white--text" text @click="closeDialog1">
+                    <v-icon left>mdi-cancel</v-icon>
+                    <span>Cancel</span>
+                  </v-btn>
+                  <v-btn dark color="primary" class="white--text" text @click="signup">
+                    <v-icon left>mdi-send</v-icon>
+                    <span>Sign Up</span>
+                  </v-btn>
                 </v-card-actions>
               </v-row>
             </v-container>
@@ -47,14 +49,14 @@
       </v-dialog>
 
       <v-dialog
-        max-width="50%"
+        max-width="30%"
         :fullscreen="$vuetify.breakpoint.xsOnly"
         v-model="dialog2"
         persistent
       >
-        <v-card>
+        <v-card class="dialog-card">
           <v-card-title>
-            <span class="headline">Login</span>
+            <span class="headline grey--text text--darken-3">Login</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -64,28 +66,8 @@
                 </v-col>
                 <v-col cols="12">
                   <v-text-field v-model="signinPassword" label="Password*" type="password" required></v-text-field>
-                  <v-row>
-                    <p>Login Options</p>
-                  </v-row>
-                  <v-row class="d-flex">
-                    <v-col cols="4">
-                      <v-btn text icon color="red">
-                        <v-icon>mdi-google</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-btn text icon color="#4267B2">
-                        <v-icon>mdi-facebook</v-icon>
-                      </v-btn>
-                    </v-col>
-                    <v-col cols="4">
-                      <v-btn text icon color="#1DA1F2">
-                        <v-icon>mdi-twitter</v-icon>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
                   <div>
-                    <p @click="openDialog1" style="cursor: pointer;">
+                    <p @click="openDialog1" class="grey--text text--darken-3" style="cursor: pointer;">
                       Don't have an account?
                       <b>Sign Up Here!</b>
                     </p>
@@ -96,8 +78,14 @@
               <v-row justify="center">
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
-                  <v-btn color="black" text @click="closeDialog2">Cancel</v-btn>
-                  <v-btn color="black" text @click="login">Login</v-btn>
+                  <v-btn dark color="red" class="white--text" text @click="closeDialog2">
+                    <v-icon left>mdi-cancel</v-icon>
+                    <span>Cancel</span>
+                  </v-btn>
+                  <v-btn dark color="primary" class="white--text" text @click="login">
+                    <v-icon left>mdi-send</v-icon>
+                    <span>Sign Up</span>
+                  </v-btn>
                 </v-card-actions>
               </v-row>
             </v-container>

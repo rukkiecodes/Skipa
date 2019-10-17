@@ -25,10 +25,10 @@
       </v-flex>
     </v-layout>
 
-    <v-layout class="imgk">
+    <v-layout class="imgk mx-auto" row wrap>
       <v-layout row wrap class="imgs my-10">
         <v-flex v-for="(card, id) in cards" :key="id" class="my-5" xs12 sm6 md4 lg4 xl4>
-          <v-card class="v-card" raised>
+          <v-card class="v-card mx-auto" raised>
             <v-card-title class="pa-2 card-title">
               <v-layout>
                 <v-flex xs3 sm3 md3 lg3 xl3>
@@ -137,19 +137,12 @@ export default {
   padding: 0;
 
   .imgk {
-    width: 90%;
-    margin: auto;
-
     .imgs {
-      justify-content: space-around;
-      display: flex;
-
       .v-card {
-        width: 90%;
+        width: 85%;
 
         .card-title {
           .title-texts{
-            // margin-top: 5%;
             p{
               font-size: .6em;
             }
