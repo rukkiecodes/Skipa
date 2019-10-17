@@ -16,19 +16,35 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col cols="12">
-                  <v-text-field v-model="signupEmail" label="Email*"></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-model="signupPassword" label="Password*" type="password" required></v-text-field>
-                  <br />
-                  <div>
-                    <p @click="openDialog2" class="grey--text text--darken-3" style="cursor: pointer;">
-                      Already have an account?
-                      <b>Sign In Here!</b>
-                    </p>
-                  </div>
-                </v-col>
+                <v-form ref="form1">
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="signupEmail"
+                      label="Email*"
+                      :rules="signupEmailRules"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="signupPassword"
+                      label="Password*"
+                      type="password"
+                      required
+                    ></v-text-field>
+                    <br />
+                    <div>
+                      <p
+                        @click="openDialog2"
+                        class="grey--text text--darken-3"
+                        style="cursor: pointer;"
+                      >
+                        Already have an account?
+                        <b>Sign In Here!</b>
+                      </p>
+                    </div>
+                  </v-col>
+                </v-form>
               </v-row>
               <v-row justify="center">
                 <v-card-actions>
@@ -37,7 +53,14 @@
                     <v-icon left>mdi-cancel</v-icon>
                     <span>Cancel</span>
                   </v-btn>
-                  <v-btn dark color="primary" class="white--text" text @click="signup">
+                  <v-btn
+                    dark
+                    color="primary"
+                    class="white--text"
+                    text
+                    @click="signup"
+                    :loading="loading1"
+                  >
                     <v-icon left>mdi-send</v-icon>
                     <span>Sign Up</span>
                   </v-btn>
@@ -61,18 +84,29 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-col cols="12">
-                  <v-text-field v-model="signinEmail" label="Email*"></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field v-model="signinPassword" label="Password*" type="password" required></v-text-field>
-                  <div>
-                    <p @click="openDialog1" class="grey--text text--darken-3" style="cursor: pointer;">
-                      Don't have an account?
-                      <b>Sign Up Here!</b>
-                    </p>
-                  </div>
-                </v-col>
+                <v-form ref="form2">
+                  <v-col cols="12">
+                    <v-text-field v-model="signinEmail" label="Email*" :rules="loginEmailRules"></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="signinPassword"
+                      label="Password*"
+                      type="password"
+                      required
+                    ></v-text-field>
+                    <div>
+                      <p
+                        @click="openDialog1"
+                        class="grey--text text--darken-3"
+                        style="cursor: pointer;"
+                      >
+                        Don't have an account?
+                        <b>Sign Up Here!</b>
+                      </p>
+                    </div>
+                  </v-col>
+                </v-form>
               </v-row>
 
               <v-row justify="center">
@@ -82,9 +116,16 @@
                     <v-icon left>mdi-cancel</v-icon>
                     <span>Cancel</span>
                   </v-btn>
-                  <v-btn dark color="primary" class="white--text" text @click="login">
+                  <v-btn
+                    dark
+                    color="primary"
+                    class="white--text"
+                    text
+                    @click="login"
+                    :loading="loading2"
+                  >
                     <v-icon left>mdi-send</v-icon>
-                    <span>Sign Up</span>
+                    <span>Login</span>
                   </v-btn>
                 </v-card-actions>
               </v-row>
@@ -107,7 +148,11 @@ export default {
     signupEmail: null,
     signupPassword: null,
     signinEmail: null,
-    signinPassword: null
+    signinPassword: null,
+    loading1: false,
+    loading2: false,
+    signupEmailRules: [v => v.length >= 3 || "Email can not be empty"],
+    loginEmailRules: [v => v.length >= 3 || "Email can not be empty"]
   }),
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -124,38 +169,46 @@ export default {
   },
   methods: {
     login() {
-      fb.auth()
-        .signInWithEmailAndPassword(this.signinEmail, this.signinPassword)
-        .then(user => {
-          this.$router.replace("/dashboard");
-        })
-        .catch(error => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          if (errorCode == "auth/wrong-password") {
-            alert("wrong Password");
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-        });
+      if (this.$refs.form2.validate()) {
+        this.loading2 = true;
+        fb.auth()
+          .signInWithEmailAndPassword(this.signinEmail, this.signinPassword)
+          .then(user => {
+            this.$router.replace("/dashboard");
+          })
+          .catch(error => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            this.loading2 = false;
+            if (errorCode == "auth/wrong-password") {
+              alert("wrong Password");
+            } else {
+              alert(errorMessage);
+            }
+            console.log(error);
+          });
+      }
     },
     signup() {
-      fb.auth()
-        .createUserWithEmailAndPassword(this.signupEmail, this.signupPassword)
-        .then(() => {
-          this.$router.replace("/dashboard");
-        })
-        .catch(error => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          if (errorCode === "auth/week-password") {
-            alert("Sorry Your password is week");
-          } else {
-            alert(errorMessage);
-          }
-          console.log(error);
-        });
+      if (this.$refs.form1.validate()) {
+        this.loading1 = true;
+        fb.auth()
+          .createUserWithEmailAndPassword(this.signupEmail, this.signupPassword)
+          .then(() => {
+            this.$router.replace("/dashboard");
+          })
+          .catch(error => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            this.loading1 = false;
+            if (errorCode === "auth/week-password") {
+              alert("Sorry Your password is week");
+            } else {
+              alert(errorMessage);
+            }
+            console.log(error);
+          });
+      }
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;

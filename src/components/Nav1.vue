@@ -17,7 +17,7 @@
         </v-btn>
 
         <v-btn class="rout-color" value="justify">
-          <Forms />
+          <Forms  @errorMessage="snackbar = true"/>
         </v-btn>
       </v-btn-toggle>
     </v-toolbar>
@@ -77,7 +77,7 @@ export default {
       { title: "About", icon: "mdi-help", route: "/about" }
     ],
     right: null,
-    panel: false
+    panel: false,
   }),
   components: {
     Forms
