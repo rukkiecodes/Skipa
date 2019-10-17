@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-layout>
+    <v-layout row wrap>
       <v-row justify="center">
         <v-hover v-slot:default="{ hover }">
           <v-card :elevation="hover ? 12 : 2" class="statistics-card mt-4 mx-auto">
@@ -67,6 +67,7 @@
                               v-model="files.fileName"
                               label="Name / Company Name*"
                               required
+                              prepend-icon="mdi-account"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="12">
@@ -76,6 +77,7 @@
                               label="Preview"
                               placeholder="Write a short review"
                               hint="What would you like people to think about you work"
+                              prepend-icon="mdi-pencil"
                             ></v-textarea>
                           </v-col>
                         </v-row>
@@ -169,7 +171,7 @@ import { storage } from "../firebaseConfig";
 export default {
   data: () => ({
     labels: ["12am", "3am", "6am", "9am", "12pm", "3pm", "6pm", "9pm"],
-    value: [200, 675, 410, 390, 310, 460, 250, 240],
+    value: [200, 675, 400, 390, 310, 460, 250, 240],
     collapseOnScroll: true,
     dialog1: false,
     cards: [],
