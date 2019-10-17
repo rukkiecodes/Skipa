@@ -4,8 +4,6 @@ import Home from "./views/Home.vue";
 import About from "./views/About.vue"
 import Dashboard from "./views/Dashboard.vue"
 import Drive from "./views/Drive.vue"
-import Photo from "./views/Photo"
-import Video from "./views/Video.vue"
 import AboutSkippa from "./views/AboutSkippa.vue"
 
 Vue.use(Router);
@@ -28,16 +26,6 @@ export default new Router({
           path: "drive",
           name: "drive",
           component: Drive
-        },
-        {
-          path: "photo",
-          name: "photo",
-          component: Photo
-        },
-        {
-          path: "video",
-          name: "video",
-          component: Video
         },
         {
           path: "aboutSkippa",

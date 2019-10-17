@@ -16,35 +16,23 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-form ref="form1">
-                  <v-col cols="12">
-                    <v-text-field
-                      v-model="signupEmail"
-                      label="Email*"
-                      :rules="signupEmailRules"
-                      required
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      v-model="signupPassword"
-                      label="Password*"
-                      type="password"
-                      required
-                    ></v-text-field>
-                    <br />
-                    <div>
-                      <p
-                        @click="openDialog2"
-                        class="grey--text text--darken-3"
-                        style="cursor: pointer;"
-                      >
-                        Already have an account?
-                        <b>Sign In Here!</b>
-                      </p>
-                    </div>
-                  </v-col>
-                </v-form>
+                <v-col cols="12">
+                  <v-text-field v-model="signupEmail" label="Email*" required></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field v-model="signupPassword" label="Password*" type="password" required></v-text-field>
+                  <br />
+                  <div>
+                    <p
+                      @click="openDialog2"
+                      class="grey--text text--darken-3"
+                      style="cursor: pointer;"
+                    >
+                      Already have an account?
+                      <b>Sign In Here!</b>
+                    </p>
+                  </div>
+                </v-col>
               </v-row>
               <v-row justify="center">
                 <v-card-actions>
@@ -71,12 +59,7 @@
         </v-card>
       </v-dialog>
 
-      <v-dialog
-        width="40vw"
-        :fullscreen="$vuetify.breakpoint.xsOnly"
-        v-model="dialog2"
-        persistent
-      >
+      <v-dialog width="40vw" :fullscreen="$vuetify.breakpoint.xsOnly" v-model="dialog2" persistent>
         <v-card class="dialog-card">
           <v-card-title>
             <span class="headline grey--text text--darken-3">Login</span>
@@ -84,29 +67,22 @@
           <v-card-text>
             <v-container>
               <v-row>
-                <v-form ref="form2">
-                  <v-col cols="12">
-                    <v-text-field v-model="signinEmail" label="Email*" :rules="loginEmailRules"></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field
-                      v-model="signinPassword"
-                      label="Password*"
-                      type="password"
-                      required
-                    ></v-text-field>
-                    <div>
-                      <p
-                        @click="openDialog1"
-                        class="grey--text text--darken-3"
-                        style="cursor: pointer;"
-                      >
-                        Don't have an account?
-                        <b>Sign Up Here!</b>
-                      </p>
-                    </div>
-                  </v-col>
-                </v-form>
+                <v-col cols="12">
+                  <v-text-field v-model="signinEmail" label="Email*"></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field v-model="signinPassword" label="Password*" type="password" required></v-text-field>
+                  <div>
+                    <p
+                      @click="openDialog1"
+                      class="grey--text text--darken-3"
+                      style="cursor: pointer;"
+                    >
+                      Don't have an account?
+                      <b>Sign Up Here!</b>
+                    </p>
+                  </div>
+                </v-col>
               </v-row>
 
               <v-row justify="center">
@@ -150,9 +126,7 @@ export default {
     signinEmail: null,
     signinPassword: null,
     loading1: false,
-    loading2: false,
-    signupEmailRules: [v => v.length >= 3 || "Email can not be empty"],
-    loginEmailRules: [v => v.length >= 3 || "Email can not be empty"]
+    loading2: false
   }),
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -169,46 +143,42 @@ export default {
   },
   methods: {
     login() {
-      if (this.$refs.form2.validate()) {
-        this.loading2 = true;
-        fb.auth()
-          .signInWithEmailAndPassword(this.signinEmail, this.signinPassword)
-          .then(user => {
-            this.$router.replace("/dashboard");
-          })
-          .catch(error => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            this.loading2 = false;
-            if (errorCode == "auth/wrong-password") {
-              alert("wrong Password");
-            } else {
-              alert(errorMessage);
-            }
-            console.log(error);
-          });
-      }
+      this.loading2 = true;
+      fb.auth()
+        .signInWithEmailAndPassword(this.signinEmail, this.signinPassword)
+        .then(user => {
+          this.$router.replace("/dashboard");
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          this.loading2 = false;
+          if (errorCode == "auth/wrong-password") {
+            alert("wrong Password");
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+        });
     },
     signup() {
-      if (this.$refs.form1.validate()) {
-        this.loading1 = true;
-        fb.auth()
-          .createUserWithEmailAndPassword(this.signupEmail, this.signupPassword)
-          .then(() => {
-            this.$router.replace("/dashboard");
-          })
-          .catch(error => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            this.loading1 = false;
-            if (errorCode === "auth/week-password") {
-              alert("Sorry Your password is week");
-            } else {
-              alert(errorMessage);
-            }
-            console.log(error);
-          });
-      }
+      this.loading1 = true;
+      fb.auth()
+        .createUserWithEmailAndPassword(this.signupEmail, this.signupPassword)
+        .then(() => {
+          this.$router.replace("/dashboard");
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          this.loading1 = false;
+          if (errorCode === "auth/week-password") {
+            alert("Sorry Your password is week");
+          } else {
+            alert(errorMessage);
+          }
+          console.log(error);
+        });
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;

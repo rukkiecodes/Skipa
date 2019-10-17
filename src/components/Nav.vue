@@ -1,13 +1,19 @@
 <template>
   <nav class="py-2">
     <v-toolbar dense flat color="white">
-      <v-app-bar-nav-icon class="grey--text text--darken-3" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="display:flex;">
         <v-img width="2em" src="@/assets/logo.png"></v-img>
         <p class="my-2 mx-2 grey--text text--darken-3 hidden-sm-and-down">Skippa</p>
       </v-toolbar-title>
 
       <div class="flex-grow-1"></div>
+
+      <v-btn value="right" text>
+        <router-link class="grey--text text--darken-4" style="text-decoration:none;" to="/dashboard/drive">Drive</router-link>
+      </v-btn>
+      <v-btn value="right" text>
+        <router-link class="grey--text text--darken-4" style="text-decoration:none;" to="/dashboard/aboutSkippa">About</router-link>
+      </v-btn>
 
       <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
         <template v-slot:activator="{ on }">
@@ -19,25 +25,23 @@
         </template>
 
         <v-card>
-          <v-list>
+          <v-list dense>
             <v-list-item>
               <v-list-item-avatar>
                 <img src="../assets/av1.jpg" alt="John" />
               </v-list-item-avatar>
-
               <v-list-item-content>
                 <v-list-item-title class="grey--text text--darken-3">John Doe</v-list-item-title>
-                <!-- <v-list-item-subtitle>Founder of Vuetify.js</v-list-item-subtitle> -->
               </v-list-item-content>
             </v-list-item>
           </v-list>
 
           <v-divider></v-divider>
 
-          <v-list>
-            <v-list-item @click="logout">
+          <v-list dense>
+            <v-list-item class="py-n5" @click="logout">
               <v-list-item-action>
-                <v-btn  class="px-7" color="width" fab text>
+                <v-btn class="px-7" color="width" fab text>
                   <v-icon class="grey--text text--darken-3">mdi-export-variant</v-icon>
                 </v-btn>
               </v-list-item-action>
@@ -59,50 +63,6 @@
         </v-card>
       </v-menu>
     </v-toolbar>
-
-    <v-navigation-drawer v-model="drawer" app class="white">
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title">
-            <div class="text-center">
-
-              <v-form>
-                <v-container>
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field clearable label="Search Skippa" type="text">
-                        <template v-slot:append>
-                          <v-fade-transition leave-absolute>
-                            <v-btn icon class="my-n2">
-                              <v-icon class="grey--text text--darken-3">mdi-send</v-icon>
-                            </v-btn>
-                          </v-fade-transition>
-                        </template>
-                      </v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-form>
-            </div>
-          </v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-
-      <v-divider></v-divider>
-
-      <v-list dense nav>
-        <v-list-item v-for="item in items" :key="item.title" router :to="item.route" link>
-          <v-list-item-icon>
-            <v-icon class="grey--text text--darken-3">{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title class="grey--text text--darken-3">{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item></v-list-item>
-      </v-list>
-    </v-navigation-drawer>
   </nav>
 </template>
 
@@ -110,29 +70,6 @@
 import { fb } from "../firebaseConfig";
 export default {
   data: () => ({
-    drawer: false,
-    items: [
-      {
-        title: "Drive",
-        icon: "mdi-cloud-upload",
-        route: "/dashboard/drive"
-      },
-      {
-        title: "Photos",
-        icon: "mdi-image",
-        route: "/dashboard/photo"
-      },
-      {
-        title: "Videos",
-        icon: "mdi-video",
-        route: "/dashboard/video"
-      },
-      {
-        title: "About",
-        icon: "mdi-help",
-        route: "/dashboard/aboutSkippa"
-      }
-    ],
     menu: false
   }),
   methods: {
