@@ -1,10 +1,10 @@
 <template>
   <div class="form">
     <v-row justify="center">
-      <v-btn text class="grey--text text--darken-3" dark @click="dialog = true">Sign Up</v-btn>
+      <v-btn text class="white--text" dark @click="dialog = true">Sign Up</v-btn>
       <v-dialog
         class="dialog1"
-        max-width="30%"
+        width="40vw"
         :fullscreen="$vuetify.breakpoint.xsOnly"
         v-model="dialog"
         persistent
@@ -72,7 +72,7 @@
       </v-dialog>
 
       <v-dialog
-        max-width="30%"
+        width="40vw"
         :fullscreen="$vuetify.breakpoint.xsOnly"
         v-model="dialog2"
         persistent
