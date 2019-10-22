@@ -28,20 +28,25 @@
                         <v-row>
                           <v-col cols="12">
                             <v-file-input
-                            class="grey--text text--darken-4"
+                              class="grey--text text--darken-4"
                               multiple
                               label="File input"
                               accept="image/*|audio/*|video/*"
                             ></v-file-input>
                           </v-col>
                           <v-col cols="12">
-                            <v-text-field class="grey--text text--darken-4" v-model="fileName" label="Name / Company Name*" required>
+                            <v-text-field
+                              class="grey--text text--darken-4"
+                              v-model="files.fileName"
+                              label="Name / Company Name*"
+                              required
+                            >
                               <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
                             </v-text-field>
                           </v-col>
                           <v-col cols="12">
                             <v-textarea
-                              v-model="fileReview"
+                              v-model="files.fileReview"
                               class="grey--text text--darken-4"
                               name="input-7-1"
                               label="Preview"
@@ -57,7 +62,7 @@
                       <v-btn class="red--text" text @click="clearFile">
                         <v-icon>mdi-cancel</v-icon>Cancel
                       </v-btn>
-                      <v-btn class="green--text" text>
+                      <v-btn @click="addFile" class="green--text" text>
                         <v-icon>mdi-cloud-upload</v-icon>Save
                       </v-btn>
                     </v-card-actions>
@@ -85,10 +90,20 @@
                       <v-container>
                         <v-row>
                           <v-col cols="12">
-                            <v-file-input class="grey--text text--darken-4" multiple label="File input" accept="image/*"></v-file-input>
+                            <v-file-input
+                              class="grey--text text--darken-4"
+                              multiple
+                              label="File input"
+                              accept="image/*"
+                            ></v-file-input>
                           </v-col>
                           <v-col cols="12">
-                            <v-text-field class="grey--text text--darken-4" v-model="photoName" label="Name / Company Name*" required>
+                            <v-text-field
+                              class="grey--text text--darken-4"
+                              v-model="photoName"
+                              label="Name / Company Name*"
+                              required
+                            >
                               <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
                             </v-text-field>
                           </v-col>
@@ -140,13 +155,18 @@
                             <v-file-input multiple label="File input" accept="video/*"></v-file-input>
                           </v-col>
                           <v-col cols="12">
-                            <v-text-field class="grey--text text--darken-4" v-model="videoName" label="Name / Company Name*" required>
+                            <v-text-field
+                              class="grey--text text--darken-4"
+                              v-model="videoName"
+                              label="Name / Company Name*"
+                              required
+                            >
                               <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
                             </v-text-field>
                           </v-col>
                           <v-col cols="12">
                             <v-textarea
-                            class="grey--text text--darken-4"
+                              class="grey--text text--darken-4"
                               name="input-7-1"
                               v-model="videoReview"
                               label="Preview"
@@ -179,16 +199,23 @@
 </template>
 
 <script>
+import { fb, db } from "../firebaseConfig";
+import { storage } from "firebase";
 export default {
   data: () => ({
+    uploads: [],
     isMobile: false,
     dialog1: false,
     dialog2: false,
     dialog3: false,
-    fileName: null,
-    fileReview: null,
-    photoName: null,
-    photoReview: null,
+    files: {
+      fileName: null,
+      fileReview: null
+    },
+    photos: {
+      photoName: null,
+      photoReview: null
+    },
     videoName: null,
     videoReview: null
   }),
@@ -205,7 +232,24 @@ export default {
       passive: true
     });
   },
+  firestore() {
+    return {
+      uploads: db.collection("media")
+    };
+  },
   methods: {
+    addFile() {
+      // this.$firestore.uploads
+      //   .add(this.files)
+      db.collection("media")
+        .add(this.files)
+        .then(() => {
+          console.log("Document successfully written!");
+        })
+        .catch(error => {
+          console.error("Error writing document: ", error);
+        });
+    },
     clearVideo() {
       this.dialog3 = false;
       this.videoName = null;
@@ -213,13 +257,13 @@ export default {
     },
     clearPhotos() {
       this.dialog2 = false;
-      this.photoName = null;
-      this.photoReview = null;
+      this.photos.photoName = null;
+      this.photos.photoReview = null;
     },
     clearFile() {
       this.dialog1 = false;
-      this.fileName = null;
-      this.fileReview = null;
+      this.files.fileName = false;
+      this.files.fileReview = null;
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;
