@@ -4,6 +4,9 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import vuetify from './plugins/vuetify';
+import Swal from 'sweetalert2';
+
+window.Swal = Swal;
 
 Vue.config.productionTip = false;
 

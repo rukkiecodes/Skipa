@@ -1,6 +1,6 @@
 <template>
   <nav class="py-2">
-    <v-toolbar dense flat color="white">
+    <v-toolbar flat color="indigo" class="mt-n2">
       <v-toolbar-title style="display:flex;">
         <v-img width="2em" src="@/assets/logo.png"></v-img>
         <p class="my-2 mx-2 grey--text text--darken-3 hidden-sm-and-down">Skippa</p>
@@ -9,17 +9,17 @@
       <div class="flex-grow-1"></div>
 
       <v-btn value="right" text>
-        <router-link class="grey--text text--darken-4" style="text-decoration:none;" to="/dashboard/drive">Drive</router-link>
+        <router-link class="white--text" style="text-decoration:none;" to="/dashboard/drive">Drive</router-link>
       </v-btn>
       <v-btn value="right" text>
-        <router-link class="grey--text text--darken-4" style="text-decoration:none;" to="/dashboard/aboutSkippa">About</router-link>
+        <router-link class="white--text" style="text-decoration:none;" to="/dashboard/aboutSkippa">About</router-link>
       </v-btn>
 
-      <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
+      <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y>
         <template v-slot:activator="{ on }">
           <v-btn text color="white" fab dark v-on="on">
             <v-avatar>
-              <img src="../assets/av1.jpg" alt="John" />
+              <img src="../assets/me.png" alt="John" />
             </v-avatar>
           </v-btn>
         </template>
@@ -27,9 +27,6 @@
         <v-card>
           <v-list dense>
             <v-list-item>
-              <v-list-item-avatar>
-                <img src="../assets/av1.jpg" alt="John" />
-              </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title class="grey--text text--darken-3">John Doe</v-list-item-title>
               </v-list-item-content>
@@ -45,21 +42,9 @@
                   <v-icon class="grey--text text--darken-3">mdi-export-variant</v-icon>
                 </v-btn>
               </v-list-item-action>
-              <v-list-item-title class="grey--text text--darken-3">Logout</v-list-item-title>
+              <v-list-item-title @click="menu = false" class="grey--text text--darken-3">Logout</v-list-item-title>
             </v-list-item>
           </v-list>
-
-          <v-card-actions>
-            <div class="flex-grow-1"></div>
-
-            <v-row align="center" justify="center">
-              <v-col align-self="center">
-                <v-btn text @click="menu = false">
-                  <v-icon class="grey--text text--darken-3">mdi-close</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-card-actions>
         </v-card>
       </v-menu>
     </v-toolbar>

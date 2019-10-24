@@ -1,205 +1,163 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-layout row wrap>
-      <v-row justify="center">
-        <v-col align-self="center">
-          <v-card flat class="overflow-hidden upload-card">
-            <v-app-bar dense color="white" dark>
-              <v-row justify="space-around">
-                <!-- dialog for random file upload -->
-                <v-dialog
-                  :fullscreen="$vuetify.breakpoint.xsOnly"
-                  v-model="dialog1"
-                  persistent
-                  max-width="50vw"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-btn dark v-on="on" tile color="white" text>
-                      <v-icon color="grey darken-4">mdi-file</v-icon>
-                      <p class="my-2 grey--text text--darken-4">File</p>
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline grey--text text--darken-4">Upload file</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12">
-                            <v-file-input
-                              class="grey--text text--darken-4"
-                              multiple
-                              label="File input"
-                              accept="image/*|audio/*|video/*"
-                            ></v-file-input>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field
-                              class="grey--text text--darken-4"
-                              v-model="files.fileName"
-                              label="Name / Company Name*"
-                              required
-                            >
-                              <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
-                            </v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-textarea
-                              v-model="files.fileReview"
-                              class="grey--text text--darken-4"
-                              name="input-7-1"
-                              label="Preview"
-                              placeholder="Write a short preview"
-                              hint="How would u like people to think about you work"
-                            ></v-textarea>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn class="red--text" text @click="clearFile">
-                        <v-icon>mdi-cancel</v-icon>Cancel
-                      </v-btn>
-                      <v-btn @click="addFile" class="green--text" text>
-                        <v-icon>mdi-cloud-upload</v-icon>Save
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+      <v-flex>
+        <v-app-bar flat dense color="white" class="my-1 mt-n4 pa-0" max-width="100vw" dark>
+          <v-row justify="space-around">
+            <v-dialog
+              :fullscreen="$vuetify.breakpoint.xsOnly"
+              v-model="dialog1"
+              persistent
+              max-width="50vw"
+            >
+              <template v-slot:activator="{ on }">
+                <v-btn large dark v-on="on" text color="indigo">
+                  <v-icon color="indigo">mdi-cloud-upload</v-icon>
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>
+                  <span class="headline grey--text text--darken-4">Upload file</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-file-input
+                          class="grey--text text--darken-4"
+                          multiple
+                          label="File input"
+                          accept="image/*|audio/*|video/*"
+                        ></v-file-input>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          class="grey--text text--darken-4"
+                          v-model="files.fileName"
+                          label="Name / Company Name*"
+                          required
+                        >
+                          <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-textarea
+                          v-model="files.fileReview"
+                          class="grey--text text--darken-4"
+                          name="input-7-1"
+                          label="Preview"
+                          placeholder="Write a short preview"
+                          hint="How would u like people to think about you work"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <div class="flex-grow-1"></div>
+                  <v-btn class="red--text" text @click="clearFile">
+                    <v-icon left>mdi-cancel</v-icon>
+                    <span>Cancel</span>
+                  </v-btn>
+                  <v-btn @click="addFile" class="green--text" text>
+                    <v-icon left>mdi-cloud-upload</v-icon>
+                    <span>Save</span>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+            <v-dialog
+              :fullscreen="$vuetify.breakpoint.xsOnly"
+              v-model="dialog2"
+              persistent
+              max-width="50vw"
+            >
+              <!-- <template v-slot:activator="{ on }">
+                <v-btn large dark v-on="on" text color="indigo">
+                  <v-icon color="indigo">mdi-cloud-upload</v-icon>
+                </v-btn>
+              </template> -->
+              <v-card>
+                <v-card-title>
+                  <span class="headline grey--text text--darken-4">Update file</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-row>
+                      <v-col cols="12">
+                        <v-file-input
+                          class="grey--text text--darken-4"
+                          multiple
+                          label="File input"
+                          accept="image/*|audio/*|video/*"
+                        ></v-file-input>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          class="grey--text text--darken-4"
+                          v-model="files.fileName"
+                          label="Name / Company Name*"
+                          required
+                        >
+                          <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
+                        </v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-textarea
+                          v-model="files.fileReview"
+                          class="grey--text text--darken-4"
+                          name="input-7-1"
+                          label="Preview"
+                          placeholder="Write a short preview"
+                          hint="How would u like people to think about you work"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <div class="flex-grow-1"></div>
+                  <v-btn class="red--text" text @click="clearFileUpdate">
+                    <v-icon left>mdi-cancel</v-icon>
+                    <span>Cancel</span>
+                  </v-btn>
+                  <v-btn @click="fileUpdate" class="green--text" text>
+                    <v-icon left>mdi-cloud-upload</v-icon>
+                    <span>Save</span>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-row>
+        </v-app-bar>
+      </v-flex>
+    </v-layout>
 
-                <!-- dialog for only image upload -->
-                <v-dialog
-                  :fullscreen="$vuetify.breakpoint.xsOnly"
-                  v-model="dialog2"
-                  persistent
-                  max-width="50vw"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" tile color="white" class="black--text" text>
-                      <v-icon color="grey darken-4">mdi-image</v-icon>
-                      <p class="my-2 grey--text text--darken-4">Image</p>
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline grey--text text--darken-4">Upload an Image</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12">
-                            <v-file-input
-                              class="grey--text text--darken-4"
-                              multiple
-                              label="File input"
-                              accept="image/*"
-                            ></v-file-input>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field
-                              class="grey--text text--darken-4"
-                              v-model="photoName"
-                              label="Name / Company Name*"
-                              required
-                            >
-                              <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
-                            </v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-textarea
-                              name="input-7-1"
-                              v-model="photoReview"
-                              label="Preview"
-                              placeholder="Write a short preview"
-                              hint="How would u like people to think about you work"
-                            ></v-textarea>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn class="red--text" text @click="clearPhotos">
-                        <v-icon>mdi-cancel</v-icon>Cancel
-                      </v-btn>
-                      <v-btn class="green--text" text>
-                        <v-icon>mdi-cloud-upload</v-icon>Save
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+    <v-layout row wrap>
+      <v-flex>
+        <table class="table">
+          <tr v-for="(upload, id) in uploads" :key="id">
+            <td>{{ upload.data().fileName }}</td>
 
-                <!-- dialod for only video upload -->
-                <v-dialog
-                  :fullscreen="$vuetify.breakpoint.xsOnly"
-                  v-model="dialog3"
-                  persistent
-                  max-width="50vw"
-                >
-                  <template v-slot:activator="{ on }">
-                    <v-btn v-on="on" tile color="white" class="black--text" text>
-                      <v-icon color="grey darken-4">mdi-video</v-icon>
-                      <p class="my-2 grey--text text--darken-4">Video</p>
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline grey--text text--darken-4">Upload Video</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12">
-                            <v-file-input multiple label="File input" accept="video/*"></v-file-input>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field
-                              class="grey--text text--darken-4"
-                              v-model="videoName"
-                              label="Name / Company Name*"
-                              required
-                            >
-                              <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
-                            </v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-textarea
-                              class="grey--text text--darken-4"
-                              name="input-7-1"
-                              v-model="videoReview"
-                              label="Preview"
-                              placeholder="Write a short preview"
-                              hint="How would u like people to think about you work"
-                            ></v-textarea>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                      <div class="flex-grow-1"></div>
-                      <v-btn class="red--text" text @click="clearVideo">
-                        <v-icon>mdi-cancel</v-icon>Cancel
-                      </v-btn>
-                      <v-btn class="green--text" text>
-                        <v-icon>mdi-cloud-upload</v-icon>Save
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
-              </v-row>
-            </v-app-bar>
-            <v-divider></v-divider>
-          </v-card>
-        </v-col>
-      </v-row>
+            <td>{{ upload.data().fileReview }}</td>
+
+            <td class="d-flex">
+              <v-btn @click="editFile(upload)" class="mx-n3" text color="primary">
+                <v-icon>mdi-grease-pencil</v-icon>
+              </v-btn>
+              <v-btn @click="deleteFile(upload.id)" class="mx-n3" text color="red">
+                <v-icon>mdi-trash-can-outline</v-icon>
+              </v-btn>
+            </td>
+          </tr>
+        </table>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import { fb, db } from "../firebaseConfig";
+import { fb, db } from "@/firebaseConfig";
 import { storage } from "firebase";
 export default {
   data: () => ({
@@ -207,17 +165,11 @@ export default {
     isMobile: false,
     dialog1: false,
     dialog2: false,
-    dialog3: false,
     files: {
       fileName: null,
       fileReview: null
     },
-    photos: {
-      photoName: null,
-      photoReview: null
-    },
-    videoName: null,
-    videoReview: null
+    activeItem: null
   }),
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -232,42 +184,88 @@ export default {
       passive: true
     });
   },
-  firestore() {
-    return {
-      uploads: db.collection("media")
-    };
-  },
   methods: {
-    addFile() {
-      // this.$firestore.uploads
-      //   .add(this.files)
-      db.collection("media")
-        .add(this.files)
-        .then(() => {
-          console.log("Document successfully written!");
+    watcher(){
+      db.collection("media").onSnapshot(querySnapshot => {
+        this.uploads = [];
+        querySnapshot.forEach(doc => {
+          this.uploads.push(doc);
         })
-        .catch(error => {
-          console.error("Error writing document: ", error);
+      })
+    },
+    fileUpdate(){
+      db.collection("media").doc(this.activeItem).update(this.files)
+      .then(() => {
+        console.log("Document writen successfully!");
+        this.watcher();
+        this.dialog2 = false;
+      }).catch(error => {
+        console.error("Error updating document: ", error);
+      })
+    },
+    editFile(files){
+      this.dialog2 = true;
+      this.files = files.data();
+      this.activeItem = files.id;
+    },
+    deleteFile(doc) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          db.collection("media").doc(doc).delete()
+          .then(() => {
+            console.log("Document successfully deleted!");
+          }).catch(error => {
+            console.error("Error removing document: ", error);
+          })
+          Swal.fire({
+            type: "success",
+            title: "Deleted  successfully"
+          });
+        }
+      });
+    },
+    readData() {
+      db.collection("media").onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          console.log(doc.id, " => ", doc.data());
+          this.uploads.push(doc);
         });
+      });
     },
-    clearVideo() {
-      this.dialog3 = false;
-      this.videoName = null;
-      this.videoReview = null;
-    },
-    clearPhotos() {
-      this.dialog2 = false;
-      this.photos.photoName = null;
-      this.photos.photoReview = null;
-    },
-    clearFile() {
+    addFile() {
+      db.collection("media").add(this.files);
+      console.log("Document successfully written!");
       this.dialog1 = false;
-      this.files.fileName = false;
+      Swal.fire({
+        type: "success",
+        title: "Document created  successfully"
+      });
+      // this.readData();
+    },
+    clearFile(files) {
+      this.dialog1 = false;
+      this.files.fileName = null;
+      this.files.fileReview = null;
+    },
+    clearFileUpdate(){
+      this.dialog2 = false;
+      this.files.fileName = null;
       this.files.fileReview = null;
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;
     }
+  },
+  created() {
+    this.readData();
   }
 };
 </script>
