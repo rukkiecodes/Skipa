@@ -76,7 +76,7 @@
                 <v-btn large dark v-on="on" text color="indigo">
                   <v-icon color="indigo">mdi-cloud-upload</v-icon>
                 </v-btn>
-              </template> -->
+              </template>-->
               <v-card>
                 <v-card-title>
                   <span class="headline grey--text text--darken-4">Update file</span>
@@ -134,23 +134,32 @@
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex>
-        <table class="table">
-          <tr v-for="(upload, id) in uploads" :key="id">
-            <td>{{ upload.data().fileName }}</td>
+      <v-flex v-for="upload in uploads" :key="upload.fileName" xs12 sm12 md3 lg3 xl4>
+        <v-card max-width="92%" class="mx-auto my-5">
+          <v-list-item>
+            <v-list-item-avatar>
+              <img src="../assets/me.png" alt="John" />
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title class="headline">{{ upload.fileName }}</v-list-item-title>
+              <v-list-item-subtitle>{{ upload.fileReview }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
 
-            <td>{{ upload.data().fileReview }}</td>
+          <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
 
-            <td class="d-flex">
-              <v-btn @click="editFile(upload)" class="mx-n3" text color="primary">
-                <v-icon>mdi-grease-pencil</v-icon>
-              </v-btn>
-              <v-btn @click="deleteFile(upload.id)" class="mx-n3" text color="red">
-                <v-icon>mdi-trash-can-outline</v-icon>
-              </v-btn>
-            </td>
-          </tr>
-        </table>
+          <v-card-actions>
+            <v-btn text color="deep-purple accent-4">Read</v-btn>
+            <v-btn text color="deep-purple accent-4">Bookmark</v-btn>
+            <v-spacer></v-spacer>
+            <v-btn @click="editFile(upload)" class="mx-n3" text color="grey darken-3">
+              <v-icon>mdi-grease-pencil</v-icon>
+            </v-btn>
+            <v-btn @click="deleteFile(upload)" class="mx-n3" text color="grey darken-3">
+              <v-icon>mdi-trash-can-outline</v-icon>
+            </v-btn>
+          </v-card-actions>
+        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -167,7 +176,8 @@ export default {
     dialog2: false,
     files: {
       fileName: null,
-      fileReview: null
+      fileReview: null,
+      fileImage: null
     },
     activeItem: null
   }),
@@ -184,29 +194,37 @@ export default {
       passive: true
     });
   },
+  firestore() {
+    return {
+      uploads: db.collection("media")
+    };
+  },
   methods: {
-    watcher(){
-      db.collection("media").onSnapshot(querySnapshot => {
-        this.uploads = [];
-        querySnapshot.forEach(doc => {
-          this.uploads.push(doc);
-        })
-      })
+    // watcher() {
+    //   db.collection("media").onSnapshot(querySnapshot => {
+    //     this.uploads = [];
+    //     querySnapshot.forEach(doc => {
+    //       this.uploads.push(doc);
+    //     });
+    //   });
+    // },
+    fileUpdate() {
+      // db.collection("media")
+      //   .doc(this.activeItem)
+      //   .update(this.files)
+      //   .then(() => {
+      //     console.log("Document writen successfully!");
+      //     this.watcher();
+      //     this.dialog2 = false;
+      //   })
+      //   .catch(error => {
+      //     console.error("Error updating document: ", error);
+      //   });
     },
-    fileUpdate(){
-      db.collection("media").doc(this.activeItem).update(this.files)
-      .then(() => {
-        console.log("Document writen successfully!");
-        this.watcher();
-        this.dialog2 = false;
-      }).catch(error => {
-        console.error("Error updating document: ", error);
-      })
-    },
-    editFile(files){
-      this.dialog2 = true;
-      this.files = files.data();
-      this.activeItem = files.id;
+    editFile(files) {
+      // this.dialog2 = true;
+      // this.files = files.data();
+      // this.activeItem = files.id;
     },
     deleteFile(doc) {
       Swal.fire({
@@ -219,29 +237,51 @@ export default {
         confirmButtonText: "Yes, delete it!"
       }).then(result => {
         if (result.value) {
-          db.collection("media").doc(doc).delete()
-          .then(() => {
-            console.log("Document successfully deleted!");
-          }).catch(error => {
-            console.error("Error removing document: ", error);
-          })
+          this.$firestore.uploads.doc(doc[".key"]).delete();
+          console.log(doc[".key"]);
           Swal.fire({
             type: "success",
             title: "Deleted  successfully"
           });
         }
       });
+      // Swal.fire({
+      //   title: "Are you sure?",
+      //   text: "You won't be able to revert this!",
+      //   type: "warning",
+      //   showCancelButton: true,
+      //   confirmButtonColor: "#3085d6",
+      //   cancelButtonColor: "#d33",
+      //   confirmButtonText: "Yes, delete it!"
+      // }).then(result => {
+      //   if (result.value) {
+      //     db.collection("media")
+      //       .doc(doc)
+      //       .delete()
+      //       .then(() => {
+      //         console.log("Document successfully deleted!");
+      //       })
+      //       .catch(error => {
+      //         console.error("Error removing document: ", error);
+      //       });
+      //     Swal.fire({
+      //       type: "success",
+      //       title: "Deleted  successfully"
+      //     });
+      //   }
+      // });
     },
     readData() {
-      db.collection("media").onSnapshot(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          console.log(doc.id, " => ", doc.data());
-          this.uploads.push(doc);
-        });
-      });
+      // db.collection("media").onSnapshot(querySnapshot => {
+      //   querySnapshot.forEach(doc => {
+      //     console.log(doc.id, " => ", doc.data());
+      //     this.uploads.push(doc);
+      //   });
+      // });
     },
     addFile() {
-      db.collection("media").add(this.files);
+      // db.collection("media").add(this.files);
+      this.$firestore.uploads.add(this.files);
       console.log("Document successfully written!");
       this.dialog1 = false;
       Swal.fire({
@@ -255,7 +295,7 @@ export default {
       this.files.fileName = null;
       this.files.fileReview = null;
     },
-    clearFileUpdate(){
+    clearFileUpdate() {
       this.dialog2 = false;
       this.files.fileName = null;
       this.files.fileReview = null;
@@ -265,7 +305,7 @@ export default {
     }
   },
   created() {
-    this.readData();
+    // this.readData();
   }
 };
 </script>

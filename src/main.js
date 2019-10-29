@@ -5,6 +5,9 @@ import store from "./store";
 import "./registerServiceWorker";
 import vuetify from './plugins/vuetify';
 import Swal from 'sweetalert2';
+import VueFirestore from 'vue-firestore';
+
+Vue.use(VueFirestore)
 
 window.Swal = Swal;
 
