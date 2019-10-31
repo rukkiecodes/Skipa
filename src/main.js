@@ -13,6 +13,11 @@ window.Swal = Swal;
 
 Vue.config.productionTip = false;
 
+Vue.use(VueFirestore, {
+  key: 'id',         // the name of the property. Default is '.key'.
+  enumerable: true  //  whether it is enumerable or not. Default is true.
+})
+
 new Vue({
   router,
   store,

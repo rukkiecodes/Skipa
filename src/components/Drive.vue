@@ -10,25 +10,23 @@
               persistent
               max-width="50vw"
             >
-              <template v-slot:activator="{ on }">
-                <v-btn large dark v-on="on" text color="indigo">
-                  <v-icon color="indigo">mdi-cloud-upload</v-icon>
-                </v-btn>
-              </template>
               <v-card>
                 <v-card-title>
-                  <span class="headline grey--text text--darken-4">Upload file</span>
+                  <span class="headline grey--text text--darken-4" v-if="dialog == 'new'">Upload file</span>
+                  <span class="headline grey--text text--darken-4" v-if="dialog == 'edit'">Update file</span>
                 </v-card-title>
                 <v-card-text>
                   <v-container>
                     <v-row>
                       <v-col cols="12">
-                        <v-file-input
+                        <!-- <v-file-input
+                        @change="uploadDocument"
                           class="grey--text text--darken-4"
                           multiple
                           label="File input"
                           accept="image/*|audio/*|video/*"
-                        ></v-file-input>
+                        ></v-file-input> -->
+                        <input type="file" @change="uploadDocument">
                       </v-col>
                       <v-col cols="12">
                         <v-text-field
@@ -59,71 +57,13 @@
                     <v-icon left>mdi-cancel</v-icon>
                     <span>Cancel</span>
                   </v-btn>
-                  <v-btn @click="addFile" class="green--text" text>
+                  <v-btn @click="addFile" class="indigo--text" text v-if="dialog == 'new'">
                     <v-icon left>mdi-cloud-upload</v-icon>
                     <span>Save</span>
                   </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-            <v-dialog
-              :fullscreen="$vuetify.breakpoint.xsOnly"
-              v-model="dialog2"
-              persistent
-              max-width="50vw"
-            >
-              <!-- <template v-slot:activator="{ on }">
-                <v-btn large dark v-on="on" text color="indigo">
-                  <v-icon color="indigo">mdi-cloud-upload</v-icon>
-                </v-btn>
-              </template>-->
-              <v-card>
-                <v-card-title>
-                  <span class="headline grey--text text--darken-4">Update file</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12">
-                        <v-file-input
-                          class="grey--text text--darken-4"
-                          multiple
-                          label="File input"
-                          accept="image/*|audio/*|video/*"
-                        ></v-file-input>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          class="grey--text text--darken-4"
-                          v-model="files.fileName"
-                          label="Name / Company Name*"
-                          required
-                        >
-                          <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
-                        </v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea
-                          v-model="files.fileReview"
-                          class="grey--text text--darken-4"
-                          name="input-7-1"
-                          label="Preview"
-                          placeholder="Write a short preview"
-                          hint="How would u like people to think about you work"
-                        ></v-textarea>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <div class="flex-grow-1"></div>
-                  <v-btn class="red--text" text @click="clearFileUpdate">
-                    <v-icon left>mdi-cancel</v-icon>
-                    <span>Cancel</span>
-                  </v-btn>
-                  <v-btn @click="fileUpdate" class="green--text" text>
+                  <v-btn @click="updateFile()" class="indigo--text" text v-if="dialog == 'edit'">
                     <v-icon left>mdi-cloud-upload</v-icon>
-                    <span>Save</span>
+                    <span>Save Changes</span>
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -131,31 +71,43 @@
           </v-row>
         </v-app-bar>
       </v-flex>
+      <v-flex>
+        <template >
+          <v-btn @click="addNew" large dark text color="indigo">
+            <v-icon color="indigo">mdi-cloud-upload</v-icon>
+          </v-btn>
+        </template>
+      </v-flex>
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex v-for="upload in uploads" :key="upload.fileName" xs12 sm12 md3 lg3 xl4>
+      <v-flex v-for="files in uploads" :key="files.fileName" xs12 sm12 md3 lg3 xl4>
         <v-card max-width="92%" class="mx-auto my-5">
           <v-list-item>
             <v-list-item-avatar>
               <img src="../assets/me.png" alt="John" />
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title class="headline">{{ upload.fileName }}</v-list-item-title>
-              <v-list-item-subtitle>{{ upload.fileReview }}</v-list-item-subtitle>
+              <v-list-item-title class="headline">{{ files.fileName }}</v-list-item-title>
+              <v-list-item-subtitle>{{ files.fileReview }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
-          <v-img src="https://cdn.vuetifyjs.com/images/cards/mountain.jpg" height="194"></v-img>
+          <!-- <v-flex v-for="image in files.images" :key="image.id">
+            <v-img :src="image"></v-img>
+          </v-flex> -->
+          <v-flex v-for="image in files.images" :key="image.id">
+            <v-img :src="image"></v-img>
+          </v-flex>
 
           <v-card-actions>
             <v-btn text color="deep-purple accent-4">Read</v-btn>
             <v-btn text color="deep-purple accent-4">Bookmark</v-btn>
             <v-spacer></v-spacer>
-            <v-btn @click="editFile(upload)" class="mx-n3" text color="grey darken-3">
+            <v-btn @click="editFile(files)" class="mx-n3" text color="grey darken-3">
               <v-icon>mdi-grease-pencil</v-icon>
             </v-btn>
-            <v-btn @click="deleteFile(upload)" class="mx-n3" text color="grey darken-3">
+            <v-btn @click="deleteFile(files)" class="mx-n3" text color="grey darken-3">
               <v-icon>mdi-trash-can-outline</v-icon>
             </v-btn>
           </v-card-actions>
@@ -177,9 +129,11 @@ export default {
     files: {
       fileName: null,
       fileReview: null,
-      fileImage: null
+      fileImage: null,
+      images: []
     },
-    activeItem: null
+    activeItem: null,
+    dialog: null,
   }),
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -200,31 +154,46 @@ export default {
     };
   },
   methods: {
-    // watcher() {
-    //   db.collection("media").onSnapshot(querySnapshot => {
-    //     this.uploads = [];
-    //     querySnapshot.forEach(doc => {
-    //       this.uploads.push(doc);
-    //     });
-    //   });
-    // },
-    fileUpdate() {
-      // db.collection("media")
-      //   .doc(this.activeItem)
-      //   .update(this.files)
-      //   .then(() => {
-      //     console.log("Document writen successfully!");
-      //     this.watcher();
-      //     this.dialog2 = false;
-      //   })
-      //   .catch(error => {
-      //     console.error("Error updating document: ", error);
-      //   });
+    uploadDocument(event){
+      let file = event.target.files[0];
+
+      var storageRef = fb.storage().ref("images/"+ file.name);
+
+      let uploadTask = storageRef.put(file);
+
+      // console.log(event.target.files[0]);
+
+      uploadTask.on('state_changed', snapshot => {
+
+      }, error => {
+        console.error(error);
+      }, ()=>{
+        uploadTask.snapshot.ref.getDownloadURL().then(getDownloadURL => {
+          this.files.images.push(getDownloadURL);
+          onUploadProgress: uploadEvent => {
+            console.log("Upload Progress: " + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%');
+          }
+          console.log("file available at", getDownloadURL);
+        });
+      });
+    },
+    updateFile(){
+      // this.$firestore.uploads.doc(this.uploads.id).update(this.uploads);
+      this.$firestore.uploads.doc(this.files.id).update(this.files);
+    },
+    reset(){
+      this.files = {
+        fileName: null,
+        fileReview: null,
+        fileImage: null,
+        images: []
+      }
     },
     editFile(files) {
-      // this.dialog2 = true;
-      // this.files = files.data();
-      // this.activeItem = files.id;
+      this.activeItem = files.id;
+      this.dialog1 = true;
+      this.files = files;
+      this.dialog = "edit";
     },
     deleteFile(doc) {
       Swal.fire({
@@ -245,60 +214,29 @@ export default {
           });
         }
       });
-      // Swal.fire({
-      //   title: "Are you sure?",
-      //   text: "You won't be able to revert this!",
-      //   type: "warning",
-      //   showCancelButton: true,
-      //   confirmButtonColor: "#3085d6",
-      //   cancelButtonColor: "#d33",
-      //   confirmButtonText: "Yes, delete it!"
-      // }).then(result => {
-      //   if (result.value) {
-      //     db.collection("media")
-      //       .doc(doc)
-      //       .delete()
-      //       .then(() => {
-      //         console.log("Document successfully deleted!");
-      //       })
-      //       .catch(error => {
-      //         console.error("Error removing document: ", error);
-      //       });
-      //     Swal.fire({
-      //       type: "success",
-      //       title: "Deleted  successfully"
-      //     });
-      //   }
-      // });
     },
-    readData() {
-      // db.collection("media").onSnapshot(querySnapshot => {
-      //   querySnapshot.forEach(doc => {
-      //     console.log(doc.id, " => ", doc.data());
-      //     this.uploads.push(doc);
-      //   });
-      // });
-    },
+    readData() {},
     addFile() {
       // db.collection("media").add(this.files);
       this.$firestore.uploads.add(this.files);
       console.log("Document successfully written!");
       this.dialog1 = false;
-      Swal.fire({
-        type: "success",
-        title: "Document created  successfully"
-      });
       // this.readData();
+    },
+    addNew() {
+      this.dialog1 = true;
+      this.dialog = "new";
+      // this.reset();
     },
     clearFile(files) {
       this.dialog1 = false;
-      this.files.fileName = null;
-      this.files.fileReview = null;
+      // this.files.fileName = null;
+      // this.files.fileReview = null;
     },
     clearFileUpdate() {
       this.dialog2 = false;
-      this.files.fileName = null;
-      this.files.fileReview = null;
+      // this.files.fileName = null;
+      // this.files.fileReview = null;
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;

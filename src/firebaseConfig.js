@@ -1,11 +1,10 @@
 import firebase from 'firebase';
-import 'firebase/storage'
+import 'firebase/storage';
 require("firebase/firestore");
 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyAb8VSdNflEN4mur7N2Ba8PKsGsPc2Fh6w",
     apiKey: "AIzaSyAb8VSdNflEN4mur7N2Ba8PKsGsPc2Fh6w",
     authDomain: "skipa-43cff.firebaseapp.com",
     databaseURL: "https://skipa-43cff.firebaseio.com",
