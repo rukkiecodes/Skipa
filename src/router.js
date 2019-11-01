@@ -5,6 +5,7 @@ import About from "./views/About.vue"
 import Dashboard from "./views/Dashboard.vue"
 import Drive from "./views/Drive.vue"
 import AboutSkippa from "./views/AboutSkippa.vue"
+import Profile from "./views/Profile.vue"
 
 Vue.use(Router);
 
@@ -31,6 +32,11 @@ export default new Router({
           path: "aboutSkippa",
           name: "aboutSkippa",
           component: AboutSkippa
+        },
+        {
+          path: "profile",
+          name: "profile",
+          component: Profile
         }
       ]
     },

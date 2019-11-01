@@ -73,8 +73,8 @@
       </v-flex>
       <v-flex>
         <template >
-          <v-btn @click="addNew" large dark text color="indigo">
-            <v-icon color="indigo">mdi-cloud-upload</v-icon>
+          <v-btn @click="addNew" dark fab color="grey darken-4">
+            <v-icon color="white">mdi-cloud-upload</v-icon>
           </v-btn>
         </template>
       </v-flex>
