@@ -17,7 +17,7 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title class="white--text">John Leider</v-list-item-title>
+          <v-list-item-title class="white--text caption">{{ email }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { fb } from "../firebaseConfig";
+import { fb, db } from "@/firebaseConfig";
 export default {
   data: () => ({
     menu: false,
@@ -58,7 +58,8 @@ export default {
       { title: "Drive", icon: "mdi-desktop-mac-dashboard", route: "/dashboard/drive" },
       { title: "Profile", icon: "mdi-account", route: "/dashboard/profile" },
       { title: "About", icon: "mdi-account-question-outline", route: "/dashboard/aboutSkippa" }
-    ]
+    ],
+    email: null
   }),
   methods: {
     logout() {
@@ -71,6 +72,10 @@ export default {
           console.log(err);
         });
     }
+  },
+  created(){
+    var user = fb.auth().currentUser;
+    this.email = user.email;
   }
 };
 </script>
