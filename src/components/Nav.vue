@@ -1,6 +1,6 @@
 <template>
   <nav class="py-2">
-    <v-toolbar flat app color="grey darken-4" class="mt-n2">
+    <v-toolbar flat color="grey darken-4" class="mt-n2">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
       <v-toolbar-title style="display:flex;">
         <v-img width="2em" src="@/assets/logo.png"></v-img>

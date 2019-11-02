@@ -17,9 +17,6 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field v-model="signupName" label="Name*" required></v-text-field>
-                </v-col>
-                <v-col cols="12">
                   <v-text-field v-model="signupEmail" label="Email*" required></v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -126,7 +123,6 @@ export default {
     companyName: null,
     signupEmail: null,
     signupPassword: null,
-    name: null,
     signinEmail: null,
     signinPassword: null,
     loading1: false,
@@ -151,7 +147,7 @@ export default {
       fb.auth()
         .signInWithEmailAndPassword(this.signinEmail, this.signinPassword)
         .then(user => {
-          this.$router.replace("/dashboard/drive");
+          this.$router.replace("/dashboard/profile");
         })
         .catch(error => {
           const errorCode = error.code;
@@ -170,17 +166,8 @@ export default {
       fb.auth()
         .createUserWithEmailAndPassword(this.signupEmail, this.signupPassword)
         .then(user => {
-          this.$router.replace("/dashboard/drive");
           // console.log(user.user.uid);
-          db.collection("profiles").doc(user.user.uid).set({
-            name: this.name
-          })
-          .then(()=>{
-            console.log("Welcome");
-          })
-          .catch(error => {
-            console.error("Error Signing up", error);
-          })
+          this.$router.replace("/dashboard/profile");
         })
         .catch(error => {
           const errorCode = error.code;

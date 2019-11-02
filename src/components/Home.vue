@@ -9,7 +9,7 @@
           <Nav1 />
           <v-container class="fill-height advert">
             <v-row class="mt-10">
-              <v-col class="pa-10">
+              <v-col class="pa-2">
                 <v-list-item color="rgba(0, 0, 0, .4)" dark>
                   <v-list-item-content class="bounce">
                     <v-list-item-title class="display-4">Skippa</v-list-item-title>
@@ -38,6 +38,8 @@ export default {
 .home {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  overflow: hidden;
 
   .myVideo {
     position: fixed;
@@ -55,10 +57,10 @@ export default {
 
   .advert {
     @media (max-width: 768px) {
-      margin-top: 30vh;
+      margin-top: 40%;
     }
     @media (min-width: 768px) {
-      margin-top: 25vh;
+      margin-top: 20%;
     }
     .bounce {
       animation: bounce 1s infinite alternate;
