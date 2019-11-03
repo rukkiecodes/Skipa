@@ -1,7 +1,7 @@
 <template>
-  <v-container class="about">
+  <v-container fluid class="about">
     <nav>
-      <v-toolbar flat color="transparent">
+      <v-toolbar flat color="white" class="toolbar mt-n3">
         <v-toolbar-title style="display:flex;">
           <router-link to="/">
             <v-img width="2em" src="@/assets/logo.png"></v-img>
@@ -13,7 +13,11 @@
 
         <v-btn-toggle tile color="deep-purple accent-3" group>
           <v-btn value="right">
-            <router-link class="grey--text text--darken-4" style="text-decoration:none;" to="/about">About</router-link>
+            <router-link
+              class="grey--text text--darken-4"
+              style="text-decoration:none;"
+              to="/about"
+            >About</router-link>
           </v-btn>
 
           <v-btn class="rout-color" value="justify">
@@ -43,6 +47,14 @@ export default {
 <style lang="scss" scoped>
 .about {
   background: #fff;
+  box-sizing: border-box;
+  width: 100vw;
+
+  .toolbar {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+  }
 
   .footer {
     width: 75%;

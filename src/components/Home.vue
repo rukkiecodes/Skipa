@@ -11,7 +11,7 @@
             <v-row class="mt-10">
               <v-col class="pa-2">
                 <v-list-item color="rgba(0, 0, 0, .4)" dark>
-                  <v-list-item-content class="bounce">
+                  <v-list-item-content class="myBounce animated slideInLeft">
                     <v-list-item-title class="display-4">Skippa</v-list-item-title>
                     <v-list-item-subtitle class="headline">Powered by creators everywhere</v-list-item-subtitle>
                   </v-list-item-content>
@@ -62,10 +62,10 @@ export default {
     @media (min-width: 768px) {
       margin-top: 20%;
     }
-    .bounce {
-      animation: bounce 1s infinite alternate;
+    .myBounce {
+      animation: bouncer 1s infinite alternate;
     }
-    @keyframes bounce {
+    @keyframes bouncer {
       from {
         transform: translateY(0px);
       }

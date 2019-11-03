@@ -12,8 +12,14 @@
             >
               <v-card>
                 <v-card-title>
-                  <span class="headline grey--text text--darken-4" v-if="dialog == 'new'">Upload file</span>
-                  <span class="headline grey--text text--darken-4" v-if="dialog == 'edit'">Update file</span>
+                  <span
+                    class="headline grey--text text--darken-4"
+                    v-if="dialog == 'new'"
+                  >Upload file</span>
+                  <span
+                    class="headline grey--text text--darken-4"
+                    v-if="dialog == 'edit'"
+                  >Update file</span>
                 </v-card-title>
                 <v-card-text>
                   <v-container>
@@ -25,8 +31,8 @@
                           multiple
                           label="File input"
                           accept="image/*|audio/*|video/*"
-                        ></v-file-input> -->
-                        <input type="file" @change="uploadDocument">
+                        ></v-file-input>-->
+                        <input type="file" @change="uploadDocument" />
                       </v-col>
                       <v-col cols="12">
                         <v-text-field
@@ -72,11 +78,38 @@
         </v-app-bar>
       </v-flex>
       <v-flex>
-        <template >
-          <v-btn @click="addNew" dark fab color="grey darken-4">
+        <template>
+          <v-btn
+            class="mt-3 ml-n10 uploadButton"
+            height="8vh"
+            @click="addNew"
+            dark
+            color="grey darken-4"
+          >
             <v-icon color="white">mdi-cloud-upload</v-icon>
           </v-btn>
         </template>
+      </v-flex>
+    </v-layout>
+
+    <v-layout class="mt-10">
+      <v-flex>
+        <p
+          class="text-capitalize grey--text text--darken-4 font-weight-light headline my-5 py-4"
+          style="text-align:center; border-bottom: 1px solid rgba(0,0,0,0.4);"
+        >Upload Documents to your Drive</p>
+      </v-flex>
+    </v-layout>
+
+    <v-layout class="mt-n10" row wrap>
+      <v-flex>
+        <v-img class="mx-auto" color="red" src="../assets/graphic.svg" width="80%" height="auto"></v-img>
+      </v-flex>
+    </v-layout>
+
+    <v-layout row wrap>
+      <v-flex>
+        <p class="headline text-capitalize grey--text text--darken-4 font-weight-light my-5 py-4" style="text-align:center; border-bottom: 1px solid rgba(0,0,0,0.4);">Your Uploads</p>
       </v-flex>
     </v-layout>
 
@@ -95,7 +128,7 @@
 
           <!-- <v-flex v-for="image in files.images" :key="image.id">
             <v-img :src="image"></v-img>
-          </v-flex> -->
+          </v-flex>-->
           <v-flex v-for="image in files.images" :key="image.id">
             <v-img :src="image"></v-img>
           </v-flex>
@@ -133,7 +166,7 @@ export default {
       images: []
     },
     activeItem: null,
-    dialog: null,
+    dialog: null
   }),
   beforeDestroy() {
     if (typeof window !== "undefined") {
@@ -154,40 +187,47 @@ export default {
     };
   },
   methods: {
-    uploadDocument(event){
+    uploadDocument(event) {
       let file = event.target.files[0];
 
-      var storageRef = fb.storage().ref("images/"+ file.name);
+      var storageRef = fb.storage().ref("images/" + file.name);
 
       let uploadTask = storageRef.put(file);
 
       // console.log(event.target.files[0]);
 
-      uploadTask.on('state_changed', snapshot => {
-
-      }, error => {
-        console.error(error);
-      }, ()=>{
-        uploadTask.snapshot.ref.getDownloadURL().then(getDownloadURL => {
-          this.files.images.push(getDownloadURL);
-          onUploadProgress: uploadEvent => {
-            console.log("Upload Progress: " + Math.round(uploadEvent.loaded / uploadEvent.total * 100) + '%');
-          }
-          console.log("file available at", getDownloadURL);
-        });
-      });
+      uploadTask.on(
+        "state_changed",
+        snapshot => {},
+        error => {
+          console.error(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(getDownloadURL => {
+            this.files.images.push(getDownloadURL);
+            onUploadProgress: uploadEvent => {
+              console.log(
+                "Upload Progress: " +
+                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100) +
+                  "%"
+              );
+            };
+            console.log("file available at", getDownloadURL);
+          });
+        }
+      );
     },
-    updateFile(){
+    updateFile() {
       // this.$firestore.uploads.doc(this.uploads.id).update(this.uploads);
       this.$firestore.uploads.doc(this.files.id).update(this.files);
     },
-    reset(){
+    reset() {
       this.files = {
         fileName: null,
         fileReview: null,
         fileImage: null,
         images: []
-      }
+      };
     },
     editFile(files) {
       this.activeItem = files.id;
@@ -260,5 +300,10 @@ export default {
   @media (max-width: 768px) {
     width: 100%;
   }
+}
+
+.uploadButton {
+  position: fixed;
+  z-index: 1;
 }
 </style>

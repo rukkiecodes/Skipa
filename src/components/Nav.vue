@@ -1,6 +1,6 @@
 <template>
   <nav class="py-2">
-    <v-toolbar flat color="grey darken-4" class="mt-n2">
+    <v-toolbar flat color="grey darken-4" class="mt-n2 toolbar">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
       <v-toolbar-title style="display:flex;">
         <v-img width="2em" src="@/assets/logo.png"></v-img>
@@ -13,10 +13,12 @@
     <v-navigation-drawer v-model="drawer" app class="grey darken-4">
       <v-list-item>
         <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+          <v-img src="../assets/me.png"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content>
+          <v-list-item-title class="white--text caption">Terry Ochuko</v-list-item-title>
+          <v-list-item-title class="white--text caption">terryochuko112@gmail.com</v-list-item-title>
           <v-list-item-title class="white--text caption">{{ email }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -79,3 +81,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.toolbar{
+  position: fixed;
+  width: 100vw;
+  z-index: 1;
+}
+</style>

@@ -33,3 +33,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.toolbar{
+  position: fixed !important;
+  width: 100vw;
+  z-index: 1;
+}
+</style>

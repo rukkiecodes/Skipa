@@ -8,21 +8,19 @@
 
     <v-layout class="img">
       <v-row justify="center">
-        <v-img
-          src="@/assets/bg8.jpg"
-          width="100"
-          height="50vh"
-          gradient="to left, rgba(0,0,0,.2), rgba(0,0,0,.9)"
-          class="pa-10"
-        >
+        <video width="100%" poster="../assets/poster.png" class="myVideo" muted autoplay loop>
+          <source src="../assets/vid1.mp4" type="video/mp4" />
+        </video>
+
+        <v-layout class="vidText pa-10">
           <v-row align="start" class="fill-height">
             <p class="p1 white--text">
               "I think it's cool to be smart, and I think it's sexy to be smart."
               <i>- Stacey Farber</i>
             </p>
+            <p class="p2 white--text mt-10">Skippa helps u stay smart</p>
           </v-row>
-          <p class="p2 white--text">Skippa helps u stay smart</p>
-        </v-img>
+        </v-layout>
       </v-row>
     </v-layout>
 
@@ -91,7 +89,7 @@
 
 <style lang="scss" scoped>
 .about {
-    background: white;
+  background: white;
   .caption {
     width: 75%;
     text-align: center;
@@ -117,9 +115,17 @@
       width: 100%;
     }
 
+    .myVideo {
+      position: relative;
+    }
+
+    .vidText {
+      position: absolute;
+    }
+
     .p1 {
       font-size: 1.9em;
-      font-weight: 300;
+      font-weight: lighter;
       width: 35%;
       @media (max-width: 768px) {
         font-size: 1.5em;
@@ -133,8 +139,8 @@
 
     .p2 {
       font-size: 1.2em;
-      letter-spacing: 0.1em;
-      font-weight: 200;
+      letter-spacing: 0.05rem;
+      font-weight: lighter;
     }
   }
   .words {
