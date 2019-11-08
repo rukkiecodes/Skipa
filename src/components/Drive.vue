@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-layout row wrap>
       <v-flex>
-        <v-app-bar flat dense color="white" class="my-1 mt-n4 pa-0" max-width="100vw" dark>
+        <v-app-bar flat dense color="grey lighten-5" class="my-1 mt-n4 pa-0" max-width="100vw" dark>
           <v-row justify="space-around">
             <v-dialog
               :fullscreen="$vuetify.breakpoint.xsOnly"
@@ -23,93 +23,95 @@
                 </v-card-title>
                 <v-card-text>
                   <v-container>
-                    <v-row>
-                      <v-col cols="12">
-                        <!-- <v-file-input
-                        @change="uploadDocument"
-                          class="grey--text text--darken-4"
-                          multiple
-                          label="File input"
-                          accept="image/*|audio/*|video/*"
-                        ></v-file-input>-->
-                        <input type="file" @change="uploadDocument" />
-                      </v-col>
-                      <v-col cols="12">
+                    <v-layout row wrap>
+                      <v-flex class="my-5" xs12 sm12 md12 lg12 xl12>
+                        <input type="file" @change="uploadDocument" multiple />
+                      </v-flex>
+                      <v-flex class="my-5" xs12 sm12 md12 lg12 xl12>
+                        <v-layout justify-center>
+                          <v-progress-circular
+                            :rotate="360"
+                            :size="100"
+                            :width="15"
+                            :value="uploadPersentage"
+                            class="indigo--text"
+                            :color="colors"
+                          >
+                            <p class="mt-2" :hidden="showNum">{{ uploadPersentage }}%</p>
+                            <p class="mt-2" :hidden="check" :transition="trans" :origin="origin">
+                              <v-icon>mdi-check</v-icon>
+                            </p>
+                          </v-progress-circular>
+                        </v-layout>
+                      </v-flex>
+
+                      <v-flex xs12 sm12 md12 lg12 xl12>
                         <v-text-field
                           class="grey--text text--darken-4"
                           v-model="files.fileName"
                           label="Name / Company Name*"
+                          :disabled="disabled"
                           required
                         >
-                          <v-icon class="grey--text text--darken-4" slot="prepend">mdi-account</v-icon>
+                          <v-icon
+                            :disabled="disabled"
+                            class="grey--text text--darken-4"
+                            slot="prepend"
+                          >mdi-account-outline</v-icon>
                         </v-text-field>
-                      </v-col>
-                      <v-col cols="12">
+                      </v-flex>
+
+                      <v-flex xs12 sm12 md12 lg12 xl12>
                         <v-textarea
                           v-model="files.fileReview"
                           class="grey--text text--darken-4"
                           name="input-7-1"
                           label="Preview"
+                          :disabled="disabled"
                           placeholder="Write a short preview"
                           hint="How would u like people to think about you work"
                         ></v-textarea>
-                      </v-col>
-                    </v-row>
+                      </v-flex>
+                    </v-layout>
                   </v-container>
                 </v-card-text>
                 <v-card-actions>
-                  <div class="flex-grow-1"></div>
-                  <v-btn class="red--text" text @click="clearFile">
-                    <v-icon left>mdi-cancel</v-icon>
-                    <span>Cancel</span>
-                  </v-btn>
-                  <v-btn @click="addFile" class="indigo--text" text v-if="dialog == 'new'">
-                    <v-icon left>mdi-cloud-upload</v-icon>
-                    <span>Save</span>
-                  </v-btn>
-                  <v-btn @click="updateFile()" class="indigo--text" text v-if="dialog == 'edit'">
-                    <v-icon left>mdi-cloud-upload</v-icon>
-                    <span>Save Changes</span>
-                  </v-btn>
+                  <v-layout justify-space-around>
+                    <v-btn color="grey darken-4" small depressed fab @click="clearFile">
+                      <v-icon class="white--text">mdi-close</v-icon>
+                    </v-btn>
+                    <v-btn
+                      @click="addFile"
+                      color="grey darken-4"
+                      depressed
+                      small
+                      :disabled="disabled"
+                      fab
+                      :loading="loading"
+                    >
+                      <v-icon class="white--text">mdi-cloud-upload</v-icon>
+                    </v-btn>
+                  </v-layout>
                 </v-card-actions>
               </v-card>
             </v-dialog>
           </v-row>
         </v-app-bar>
       </v-flex>
-      <v-flex>
+      <v-flex class="mt-n10">
         <template>
           <v-btn
-            class="mt-3 ml-n10 uploadButton"
+            class="ml-n10 uploadButton"
             height="8vh"
             @click="addNew"
             dark
-            color="grey darken-4"
+            icon
+            depressed
+            color="grey lighten-5"
           >
-            <v-icon color="white">mdi-cloud-upload</v-icon>
+            <v-icon color="grey darken-4">mdi-cloud-upload</v-icon>
           </v-btn>
         </template>
-      </v-flex>
-    </v-layout>
-
-    <v-layout class="mt-10">
-      <v-flex>
-        <p
-          class="text-capitalize grey--text text--darken-4 font-weight-light headline my-5 py-4"
-          style="text-align:center; border-bottom: 1px solid rgba(0,0,0,0.4);"
-        >Upload Documents to your Drive</p>
-      </v-flex>
-    </v-layout>
-
-    <v-layout class="mt-n10" row wrap>
-      <v-flex>
-        <v-img class="mx-auto" color="red" src="../assets/graphic.svg" width="80%" height="auto"></v-img>
-      </v-flex>
-    </v-layout>
-
-    <v-layout row wrap>
-      <v-flex>
-        <p class="headline text-capitalize grey--text text--darken-4 font-weight-light my-5 py-4" style="text-align:center; border-bottom: 1px solid rgba(0,0,0,0.4);">Your Uploads</p>
       </v-flex>
     </v-layout>
 
@@ -134,12 +136,7 @@
           </v-flex>
 
           <v-card-actions>
-            <v-btn text color="deep-purple accent-4">Read</v-btn>
-            <v-btn text color="deep-purple accent-4">Bookmark</v-btn>
             <v-spacer></v-spacer>
-            <v-btn @click="editFile(files)" class="mx-n3" text color="grey darken-3">
-              <v-icon>mdi-grease-pencil</v-icon>
-            </v-btn>
             <v-btn @click="deleteFile(files)" class="mx-n3" text color="grey darken-3">
               <v-icon>mdi-trash-can-outline</v-icon>
             </v-btn>
@@ -159,6 +156,14 @@ export default {
     isMobile: false,
     dialog1: false,
     dialog2: false,
+    loading: false,
+    disabled: true,
+    colors: null,
+    uploadPersentage: 0,
+    check: true,
+    showNum: false,
+    trans: null,
+    origin: null,
     files: {
       fileName: null,
       fileReview: null,
@@ -194,24 +199,38 @@ export default {
 
       let uploadTask = storageRef.put(file);
 
-      // console.log(event.target.files[0]);
-
       uploadTask.on(
         "state_changed",
-        snapshot => {},
+        snapshot => {
+          var progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          const math = Math.round(progress * 100) / 100;
+          console.log("Upload is " + math + "% done");
+          this.uploadPersentage = math;
+          if(math >= 0 && math <= 25){
+              this.colors = "red accent-4";
+            }
+            else if(math > 25 && math <= 50){
+              this.colors = "amber darken-4";
+            }
+            else if(math > 50 && math <= 75){
+              this.colors = "amber";
+            }
+            else if(math == 100){
+              this.colors = "green darken-2";
+              this.check = false;
+              this.showNum = true;
+              this.trans = "fade-transition";
+              this.origin = "center center";
+              this.disabled = false;
+            }
+        },
         error => {
           console.error(error);
         },
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then(getDownloadURL => {
             this.files.images.push(getDownloadURL);
-            onUploadProgress: uploadEvent => {
-              console.log(
-                "Upload Progress: " +
-                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100) +
-                  "%"
-              );
-            };
             console.log("file available at", getDownloadURL);
           });
         }
@@ -257,7 +276,6 @@ export default {
     },
     readData() {},
     addFile() {
-      // db.collection("media").add(this.files);
       this.$firestore.uploads.add(this.files);
       console.log("Document successfully written!");
       this.dialog1 = false;
@@ -289,6 +307,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.succsess{
+  background: green;
+}
 .v-sheet--offset {
   top: -24px;
   position: relative;

@@ -1,7 +1,7 @@
 <template>
   <nav class="py-2">
-    <v-toolbar flat color="grey darken-4" class="mt-n2 toolbar">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
+    <v-toolbar flat color="grey lighten-5" class="mt-n2 toolbar">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="gery"></v-app-bar-nav-icon>
       <v-toolbar-title style="display:flex;">
         <v-img width="2em" src="@/assets/logo.png"></v-img>
         <p class="my-2 mx-2 grey--text text--darken-3 hidden-sm-and-down">Skippa</p>
@@ -18,7 +18,7 @@
 
         <v-list-item-content>
           <v-list-item-title class="white--text caption">Terry Ochuko</v-list-item-title>
-          <v-list-item-title class="white--text caption">terryochuko112@gmail.com</v-list-item-title>
+          <!-- <v-list-item-title class="white--text caption"> terryochuko112@gmail.com</v-list-item-title> -->
           <v-list-item-title class="white--text caption">{{ email }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>

@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app">
+  <v-app class="app grey lighten-4">
     <v-content>
       <router-view />
     </v-content>
@@ -13,7 +13,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#app{
-  background: #fff;
+.app{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 </style>

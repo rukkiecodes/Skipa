@@ -17,10 +17,22 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field v-model="signupEmail" label="Email*" required></v-text-field>
+                  <v-text-field v-model="name" label="Name*" required>
+                    <v-icon
+                      class="grey--text text--darken-4"
+                      slot="prepend-inner"
+                    >mdi-account-outline</v-icon>
+                  </v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-text-field v-model="signupPassword" label="Password*" type="password" required></v-text-field>
+                  <v-text-field v-model="email" label="Email*" required>
+                    <v-icon class="grey--text text--darken-4" slot="prepend-inner">mdi-email-outline</v-icon>
+                  </v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <v-text-field v-model="password" label="Password*" type="password" required>
+                    <v-icon class="grey--text text--darken-4" slot="prepend-inner">mdi-lock-outline</v-icon>
+                  </v-text-field>
                   <br />
                   <div>
                     <p
@@ -37,20 +49,11 @@
               <v-row justify="center">
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
-                  <v-btn dark color="red" class="white--text" text @click="closeDialog1">
-                    <v-icon left>mdi-cancel</v-icon>
-                    <span>Cancel</span>
+                  <v-btn dark color="grey darken-4" fab small @click="closeDialog1">
+                    <v-icon>mdi-close</v-icon>
                   </v-btn>
-                  <v-btn
-                    dark
-                    color="primary"
-                    class="white--text"
-                    text
-                    @click="signup"
-                    :loading="loading1"
-                  >
-                    <v-icon left>mdi-send</v-icon>
-                    <span>Sign Up</span>
+                  <v-btn dark color="grey darken-4" fab small @click="signup" :loading="loading1">
+                    <v-icon>mdi-location-enter</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-row>
@@ -68,10 +71,14 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field v-model="signinEmail" label="Email*"></v-text-field>
+                  <v-text-field v-model="signinEmail" label="Email*">
+                    <v-icon class="grey--text text--darken-4" slot="prepend-inner">mdi-email-outline</v-icon>
+                  </v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <v-text-field v-model="signinPassword" label="Password*" type="password" required></v-text-field>
+                  <v-text-field v-model="signinPassword" label="Password*" type="password" required>
+                    <v-icon class="grey--text text--darken-4" slot="prepend-inner">mdi-lock-outline</v-icon>
+                  </v-text-field>
                   <div>
                     <p
                       @click="openDialog1"
@@ -88,20 +95,11 @@
               <v-row justify="center">
                 <v-card-actions>
                   <div class="flex-grow-1"></div>
-                  <v-btn dark color="red" class="white--text" text @click="closeDialog2">
-                    <v-icon left>mdi-cancel</v-icon>
-                    <span>Cancel</span>
+                  <v-btn dark color="grey darken-4" small fab @click="closeDialog2">
+                    <v-icon>mdi-close</v-icon>
                   </v-btn>
-                  <v-btn
-                    dark
-                    color="primary"
-                    class="white--text"
-                    text
-                    @click="login"
-                    :loading="loading2"
-                  >
-                    <v-icon left>mdi-send</v-icon>
-                    <span>Login</span>
+                  <v-btn dark color="grey darken-4" fab small @click="login" :loading="loading2">
+                    <v-icon>mdi-login</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-row>
@@ -120,9 +118,9 @@ export default {
     dialog: false,
     dialog2: false,
     isMobile: false,
-    companyName: null,
-    signupEmail: null,
-    signupPassword: null,
+    name: null,
+    email: null,
+    password: null,
     signinEmail: null,
     signinPassword: null,
     loading1: false,
@@ -161,13 +159,24 @@ export default {
           console.log(error);
         });
     },
+
     signup() {
       this.loading1 = true;
       fb.auth()
-        .createUserWithEmailAndPassword(this.signupEmail, this.signupPassword)
+        .createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
-          // console.log(user.user.uid);
-          this.$router.replace("/dashboard/profile");
+          db.collection("profiles")
+            .doc(user.user.uid)
+            .set({
+              name: this.name
+            })
+            .then(() => {
+              console.log("document writen successfully!");
+            this.$router.replace("/dashboard/profile");
+            })
+            .catch(error => {
+              console.error("Error writing document:", error);
+            });
         })
         .catch(error => {
           const errorCode = error.code;

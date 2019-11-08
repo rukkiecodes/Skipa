@@ -8,11 +8,11 @@
         <v-flex>
           <Nav1 />
           <v-container class="fill-height advert">
-            <v-row class="mt-10">
+            <v-row>
               <v-col class="pa-2">
                 <v-list-item color="rgba(0, 0, 0, .4)" dark>
                   <v-list-item-content class="myBounce animated slideInLeft">
-                    <v-list-item-title class="display-4">Skippa</v-list-item-title>
+                    <v-list-item-title class="display-3">Skippa</v-list-item-title>
                     <v-list-item-subtitle class="headline">Powered by creators everywhere</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
@@ -59,6 +59,7 @@ export default {
     @media (max-width: 768px) {
       margin-top: 40%;
     }
+
     @media (min-width: 768px) {
       margin-top: 20%;
     }

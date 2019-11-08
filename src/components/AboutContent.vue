@@ -89,7 +89,6 @@
 
 <style lang="scss" scoped>
 .about {
-  background: white;
   .caption {
     width: 75%;
     text-align: center;
