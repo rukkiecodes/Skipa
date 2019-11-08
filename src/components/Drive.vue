@@ -39,7 +39,7 @@
                           >
                             <p class="mt-2" :hidden="showNum">{{ uploadPersentage }}%</p>
                             <p class="mt-2" :hidden="check" :transition="trans" :origin="origin">
-                              <v-icon>mdi-check</v-icon>
+                              <v-icon class="display-2">mdi-check</v-icon>
                             </p>
                           </v-progress-circular>
                         </v-layout>
@@ -127,10 +127,6 @@
               <v-list-item-subtitle>{{ files.fileReview }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
-
-          <!-- <v-flex v-for="image in files.images" :key="image.id">
-            <v-img :src="image"></v-img>
-          </v-flex>-->
           <v-flex v-for="image in files.images" :key="image.id">
             <v-img :src="image"></v-img>
           </v-flex>
@@ -168,7 +164,8 @@ export default {
       fileName: null,
       fileReview: null,
       fileImage: null,
-      images: []
+      images: [],
+      videos:[]
     },
     activeItem: null,
     dialog: null
@@ -207,23 +204,20 @@ export default {
           const math = Math.round(progress * 100) / 100;
           console.log("Upload is " + math + "% done");
           this.uploadPersentage = math;
-          if(math >= 0 && math <= 25){
-              this.colors = "red accent-4";
-            }
-            else if(math > 25 && math <= 50){
-              this.colors = "amber darken-4";
-            }
-            else if(math > 50 && math <= 75){
-              this.colors = "amber";
-            }
-            else if(math == 100){
-              this.colors = "green darken-2";
-              this.check = false;
-              this.showNum = true;
-              this.trans = "fade-transition";
-              this.origin = "center center";
-              this.disabled = false;
-            }
+          if (math >= 0 && math <= 25) {
+            this.colors = "red accent-4";
+          } else if (math > 25 && math <= 50) {
+            this.colors = "amber darken-4";
+          } else if (math > 50 && math <= 75) {
+            this.colors = "amber";
+          } else if (math == 100) {
+            this.colors = "green darken-2";
+            this.check = false;
+            this.showNum = true;
+            this.trans = "fade-transition";
+            this.origin = "center center";
+            this.disabled = false;
+          }
         },
         error => {
           console.error(error);
@@ -260,9 +254,9 @@ export default {
         text: "You won't be able to revert this!",
         type: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
+        confirmButtonColor: "red",
+        cancelButtonColor: "blue",
+        confirmButtonText: "Delete"
       }).then(result => {
         if (result.value) {
           this.$firestore.uploads.doc(doc[".key"]).delete();
@@ -288,13 +282,15 @@ export default {
     },
     clearFile(files) {
       this.dialog1 = false;
-      // this.files.fileName = null;
-      // this.files.fileReview = null;
+      this.files.fileName = null;
+      this.files.fileReview = null;
+      this.files.fileImage = null;
     },
     clearFileUpdate() {
       this.dialog2 = false;
-      // this.files.fileName = null;
-      // this.files.fileReview = null;
+      this.files.fileName = null;
+      this.files.fileReview = null;
+      this.files.fileImage = null;
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;
@@ -307,7 +303,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.succsess{
+.succsess {
   background: green;
 }
 .v-sheet--offset {

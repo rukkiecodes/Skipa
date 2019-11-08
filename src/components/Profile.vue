@@ -46,7 +46,7 @@
 
                         <v-flex xs8 sm8 md8 lg8 xl8>
                           <v-list-item-content>
-                            <v-list-item-title class="grey--text text--darken-4">RukkieCodes</v-list-item-title>
+                            <v-list-item-title class="grey--text text--darken-4">{{ profile.alias }}</v-list-item-title>
                           </v-list-item-content>
                         </v-flex>
                       </v-list-item>
@@ -89,7 +89,7 @@
 
                         <v-flex xs8 sm8 md8 lg8 xl8>
                           <v-list-item-content>
-                            <v-list-item-title class="grey--text text--darken-4">Nigerian</v-list-item-title>
+                            <v-list-item-title class="grey--text text--darken-4">{{ profile.nationality }}</v-list-item-title>
                           </v-list-item-content>
                         </v-flex>
                       </v-list-item>
@@ -111,7 +111,7 @@
                           <v-list-item-content>
                             <v-list-item-title
                               class="grey--text text--darken-4"
-                            >Tech, Games, and Cartoons</v-list-item-title>
+                            >{{ profile.interests }}</v-list-item-title>
                           </v-list-item-content>
                         </v-flex>
                       </v-list-item>
@@ -129,7 +129,7 @@
         <v-row>
           <v-col>
             <v-card flat>
-              <v-tabs vertical color="grey darken-4">
+              <v-tabs color="grey darken-4">
                 <v-tab>
                   <v-icon left>mdi-cloud-upload</v-icon>
                 </v-tab>
@@ -411,7 +411,10 @@ export default {
   },
   methods: {
     updateProfile() {
-      this.$firestore.profile.update(this.profile)
+      this.$firestore.profile.set(this.profile)
+      // this.$firestore.profile.update({
+      //   profile: this.profile
+      // })
     },
     uploadDocument(event) {
       let file = event.target.files[0];
@@ -462,11 +465,9 @@ export default {
       });
     },
     addFile() {
-      // db.collection("media").add(this.files);
       this.$firestore.uploads.add(this.files);
       console.log("Document successfully written!");
       this.dialog1 = false;
-      // this.readData();
     },
     clearFile() {
       this.dialog = false;
