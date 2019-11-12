@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-layout row wrap>
       <v-flex>
         <v-app-bar flat dense color="grey lighten-5" class="my-1 mt-n4 pa-0" max-width="100vw" dark>
@@ -98,16 +98,16 @@
           </v-row>
         </v-app-bar>
       </v-flex>
-      <v-flex class="mt-n10">
+      <v-flex class="mt-n5">
         <template>
           <v-btn
-            class="ml-n10 uploadButton"
-            height="8vh"
+            class="mt-2 ml-n5 uploadButton"
             @click="addNew"
             dark
             icon
+            x-large
             depressed
-            color="grey lighten-5"
+            color="grey lighten-3"
           >
             <v-icon color="grey darken-4">mdi-cloud-upload</v-icon>
           </v-btn>
@@ -116,7 +116,7 @@
     </v-layout>
 
     <v-layout row wrap>
-      <v-flex v-for="files in uploads" :key="files.fileName" xs12 sm12 md3 lg3 xl4>
+      <v-flex v-for="files in uploads" :key="files.fileName" xs12 sm12 md3 lg3 xl3>
         <v-card max-width="92%" class="mx-auto my-5">
           <v-list-item>
             <v-list-item-avatar>
@@ -163,9 +163,8 @@ export default {
     files: {
       fileName: null,
       fileReview: null,
-      fileImage: null,
       images: [],
-      videos:[]
+      userId: fb.auth().currentUser.uid
     },
     activeItem: null,
     dialog: null
@@ -184,6 +183,7 @@ export default {
     });
   },
   firestore() {
+    const user = fb.auth().currentUser;
     return {
       uploads: db.collection("media")
     };
@@ -191,11 +191,8 @@ export default {
   methods: {
     uploadDocument(event) {
       let file = event.target.files[0];
-
       var storageRef = fb.storage().ref("images/" + file.name);
-
       let uploadTask = storageRef.put(file);
-
       uploadTask.on(
         "state_changed",
         snapshot => {
@@ -268,17 +265,18 @@ export default {
         }
       });
     },
-    readData() {},
     addFile() {
-      this.$firestore.uploads.add(this.files);
-      console.log("Document successfully written!");
-      this.dialog1 = false;
-      // this.readData();
+      const auth = fb.auth().currentUser;
+
+      if (auth) {
+        this.$firestore.uploads.add(this.files);
+        console.log("Document successfully written!");
+        this.dialog1 = false;
+      }
     },
     addNew() {
       this.dialog1 = true;
       this.dialog = "new";
-      // this.reset();
     },
     clearFile(files) {
       this.dialog1 = false;
@@ -298,6 +296,7 @@ export default {
   },
   created() {
     // this.readData();
+    console.log(fb.auth().currentUser.uid);
   }
 };
 </script>
@@ -318,7 +317,6 @@ export default {
     width: 100%;
   }
 }
-
 .uploadButton {
   position: fixed;
   z-index: 1;

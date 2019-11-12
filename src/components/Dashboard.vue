@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard">
+  <div>
     <v-layout>
       <v-flex>
         <Nav />

@@ -89,7 +89,9 @@
 
                         <v-flex xs8 sm8 md8 lg8 xl8>
                           <v-list-item-content>
-                            <v-list-item-title class="grey--text text--darken-4">{{ profile.nationality }}</v-list-item-title>
+                            <v-list-item-title
+                              class="grey--text text--darken-4"
+                            >{{ profile.nationality }}</v-list-item-title>
                           </v-list-item-content>
                         </v-flex>
                       </v-list-item>
@@ -129,10 +131,7 @@
         <v-row>
           <v-col>
             <v-card flat>
-              <v-tabs color="grey darken-4">
-                <v-tab>
-                  <v-icon left>mdi-cloud-upload</v-icon>
-                </v-tab>
+              <v-tabs centered color="grey darken-4">
                 <v-tab>
                   <v-icon left>mdi-circle-edit-outline</v-icon>
                 </v-tab>
@@ -140,62 +139,13 @@
                   <v-icon left>mdi-progress-wrench</v-icon>
                 </v-tab>
 
-                <!-- Your Uploads -->
-                <v-tab-item>
-                  <v-card flat>
-                    <v-card-text>
-                      <v-row justify="center">
-                        <v-col justify-self="center">
-                          <v-text-field
-                            @click="write"
-                            class="grey--text text--darken-4 mx-10"
-                            color="gery"
-                            label="Upload Your Document"
-                          >
-                            <v-avatar slot="prepend-inner" class="mt-n4">
-                              <v-img width="10%" src="../assets/me.png"></v-img>
-                            </v-avatar>
-                          </v-text-field>
-                        </v-col>
-                      </v-row>
-                      <v-row>
-                        <v-col v-for="files in uploads" :key="files.fileName">
-                          <v-card max-width="60vw" height="auto" class="mx-auto my-5">
-                            <v-list-item>
-                              <v-list-item-avatar>
-                                <img max-width="100%" height="auto" src="../assets/me.png" alt="John" />
-                              </v-list-item-avatar>
-                              <v-list-item-content>
-                                <v-list-item-title class="headline">{{ files.fileName }}</v-list-item-title>
-                                <v-list-item-subtitle>{{ files.fileReview }}</v-list-item-subtitle>
-                              </v-list-item-content>
-                            </v-list-item>
-                            <v-flex v-for="image in files.images" :key="image.id">
-                              <v-img width="100%" height="auto" :src="image"></v-img>
-                            </v-flex>
-
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn
-                                @click="deleteFile(files)"
-                                class="mx-n3"
-                                text
-                                color="grey darken-3"
-                              >
-                                <v-icon>mdi-trash-can-outline</v-icon>
-                              </v-btn>
-                            </v-card-actions>
-                          </v-card>
-                        </v-col>
-                      </v-row>
-                    </v-card-text>
-                  </v-card>
-                </v-tab-item>
-
                 <!-- Edit Profile -->
                 <v-tab-item>
                   <v-card flat>
                     <v-card-text>
+                      <v-layout>
+                        <h1 class="display-2">Edit Profile</h1>
+                      </v-layout>
                       <v-layout class="mt-10" row wrap>
                         <!-- Profile Name -->
                         <v-flex class="px-2" xs12 sm6 md6 lg6 xl6>
@@ -277,87 +227,27 @@
                 <v-tab-item>
                   <v-card flat>
                     <v-card-text>
+                      <v-layout>
+                        <h1 class="display-2">Account Settings</h1>
+                      </v-layout>
                       <v-layout class="mt-10" row wrap>
-                        <v-flex class="px-2" xs12 sm6 md6 lg6 xl6>
-                          <v-text-field class="grey--text text--darken-4" label="Change Email">
-                            <v-icon
-                              class="grey--text text--darken-4"
-                              slot="prepend-inner"
-                            >mdi-email-edit-outline</v-icon>
-                          </v-text-field>
-                        </v-flex>
-
-                        <v-flex class="px-2" xs12 sm6 md6 lg6 xl6>
-                          <v-text-field class="grey--text text--darken-4" label="Change Password">
-                            <v-icon
-                              class="grey--text text--darken-4"
-                              slot="prepend-inner"
-                            >mdi-textbox-password</v-icon>
-                          </v-text-field>
-                        </v-flex>
+                          <v-flex xs12 sm6 md6 lg6 xl6>
+                            <v-btn
+                            @click="resetPassword"
+                            class="mr-2"
+                            rounded
+                            depressed
+                            color="grey darken-4"
+                          >
+                            <v-icon left class="white--text">mdi-lock</v-icon> <span class="white--text">Reset Password</span>
+                          </v-btn>
+                          </v-flex>
                       </v-layout>
                     </v-card-text>
                   </v-card>
                 </v-tab-item>
               </v-tabs>
             </v-card>
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col>
-            <v-dialog
-              :fullscreen="$vuetify.breakpoint.xsOnly"
-              v-model="dialog"
-              persistent
-              max-width="50vw"
-            >
-              <v-card>
-                <v-card-title>
-                  <span class="headline grey--text text--darken-4">Upload file</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12">
-                        <input type="file" @change="uploadDocument" multiple />
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          class="grey--text text--darken-4"
-                          v-model="files.fileName"
-                          label="Name / Company Name*"
-                          required
-                        >
-                          <v-icon class="grey--text text--darken-4" slot="prepend-inner">mdi-account</v-icon>
-                        </v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-textarea
-                          v-model="files.fileReview"
-                          class="grey--text text--darken-4"
-                          name="input-7-1"
-                          label="Preview"
-                          placeholder="Write a short preview"
-                          hint="How would u like people to think about you work"
-                        >
-                          <v-icon class="grey--text text--darken-4" slot="prepend-inner">mdi-pen</v-icon>
-                        </v-textarea>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <div class="flex-grow-1"></div>
-                  <v-btn color="grey darken-4" small fab @click="clearFile">
-                    <v-icon class="white--text">mdi-close</v-icon>
-                  </v-btn>
-                  <v-btn @click="addFile()" color="grey darken-4" small fab>
-                    <v-icon class="white--text">mdi-cloud-upload</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
           </v-col>
         </v-row>
       </v-flex>
@@ -410,70 +300,35 @@ export default {
     };
   },
   methods: {
-    updateProfile() {
-      this.$firestore.profile.set(this.profile)
-      // this.$firestore.profile.update({
-      //   profile: this.profile
-      // })
-    },
-    uploadDocument(event) {
-      let file = event.target.files[0];
+    resetPassword() {
+      const auth = fb.auth();
 
-      var storageRef = fb.storage().ref("images/" + file.name);
+      console.log(auth.currentUser);
 
-      let uploadTask = storageRef.put(file);
-
-      uploadTask.on(
-        "state_changed",
-        snapshot => {},
-        error => {
-          console.error(error);
-        },
-        () => {
-          uploadTask.snapshot.ref.getDownloadURL().then(getDownloadURL => {
-            this.files.images.push(getDownloadURL);
-            onUploadProgress: uploadEvent => {
-              console.log(
-                "Upload Progress: " +
-                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100) +
-                  "%"
-              );
-            };
-            console.log("file available at", getDownloadURL);
-          });
-        }
-      );
-    },
-    deleteFile(doc) {
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-      }).then(result => {
-        if (result.value) {
-          this.$firestore.uploads.doc(doc[".key"]).delete();
-          console.log(doc[".key"]);
+      auth
+        .sendPasswordResetEmail(auth.currentUser.email)
+        .then(() => {
           Swal.fire({
-            type: "success",
-            title: "Deleted  successfully"
-          });
-        }
-      });
+            position: 'top-end',
+            icon: 'success',
+            title: 'Email Sent',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        })
+        .catch(error => {
+          console.log(error);
+          Swal.fire({
+            position: 'top-end',
+            icon: 'error',
+            title: 'Error Sending Mail',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        });
     },
-    addFile() {
-      this.$firestore.uploads.add(this.files);
-      console.log("Document successfully written!");
-      this.dialog1 = false;
-    },
-    clearFile() {
-      this.dialog = false;
-    },
-    write() {
-      this.dialog = true;
+    updateProfile() {
+      this.$firestore.profile.set(this.profile);
     },
     onResize() {
       this.isMobile = window.innerWidth < 600;

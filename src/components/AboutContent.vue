@@ -14,7 +14,7 @@
 
         <v-layout class="vidText pa-10">
           <v-row align="start" class="fill-height">
-            <p class="p1 white--text">
+            <p class="white--text">
               "I think it's cool to be smart, and I think it's sexy to be smart."
               <i>- Stacey Farber</i>
             </p>

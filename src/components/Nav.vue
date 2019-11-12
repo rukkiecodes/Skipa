@@ -1,5 +1,5 @@
 <template>
-  <nav class="py-2">
+  <nav>
     <v-toolbar flat color="grey lighten-5" class="mt-n2 toolbar">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="gery"></v-app-bar-nav-icon>
       <v-toolbar-title style="display:flex;">
@@ -17,8 +17,6 @@
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title class="white--text caption">Terry Ochuko</v-list-item-title>
-          <!-- <v-list-item-title class="white--text caption"> terryochuko112@gmail.com</v-list-item-title> -->
           <v-list-item-title class="white--text caption">{{ email }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>

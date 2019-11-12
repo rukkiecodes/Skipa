@@ -1,7 +1,5 @@
 <template>
-  <v-container>
     <Drive/>
-  </v-container>
 </template>
 
 <script>
